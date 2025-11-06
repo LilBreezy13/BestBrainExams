@@ -1,0 +1,17 @@
+/* styles.css - small overrides for the prototype */
+
+/* Slide transitions */
+.slide { transition: opacity 1s ease; }
+.slide.opacity-0 { opacity: 0; }
+.slide.opacity-100 { opacity: 1; }
+
+/* Active tab shadow */
+.tab.active { box-shadow: 0 8px 28px rgba(59,130,246,0.18); }
+
+/* Make hero image cover strictly */
+#carousel .slide { background-size: cover; background-position: center; }
+
+/* Simple responsive tweak for small screens */
+@media (max-width: 640px) {
+  #carousel { height: 50vh; }
+}
