@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <!-- Add this in <head> (only once) -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <!-- Google Font -->
@@ -977,6 +979,17 @@ html, body {
     }
   }
 
+  .scroll-animate {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity .9s ease, transform 1s cubic-bezier(.22,1,.36,1);
+}
+.scroll-animate.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
 </style>
 </head>
 
@@ -1179,7 +1192,7 @@ html, body {
       </div>
       <div>
         <h3 class="text-lg font-semibold text-gray-900">Expertise</h3>
-        <p class="mt-2 text-sm text-gray-600">Over a decade of experience providing trusted, fair, and accurate examination systems.</p>
+        <p class="mt-2 text-sm text-gray-600">Over two decades of experience providing trusted, fair, and accurate examination systems.</p>
       </div>
     </div>
   </div>
@@ -1195,7 +1208,8 @@ html, body {
       </div>
       <div>
         <h3 class="text-lg font-semibold text-gray-900">Custom Solutions</h3>
-        <p class="mt-2 text-sm text-gray-600">We design exam systems to match each institution’s structure and data requirements.</p>
+        <p class="mt-2 text-sm text-gray-600">
+Our exams is of the highest standard and comprehensive enough to meet the tutelage of the teachers and examines the students of what they have been thought whiles meeting the syllabus and the standards of the curriculum.</p>
       </div>
     </div>
   </div>
@@ -1211,7 +1225,7 @@ html, body {
       </div>
       <div>
         <h3 class="text-lg font-semibold text-gray-900">Customer-Focused</h3>
-        <p class="mt-2 text-sm text-gray-600">We prioritize schools and partners — delivering results and feedback quickly and efficiently.</p>
+        <p class="mt-2 text-sm text-gray-600">We care for every candidate in every school and so inspire you with the greatest confidence for all-round success.</p>
       </div>
     </div>
   </div>
@@ -1227,7 +1241,7 @@ html, body {
       </div>
       <div>
         <h3 class="text-lg font-semibold text-gray-900">Reliable & Secure</h3>
-        <p class="mt-2 text-sm text-gray-600">All papers and operations are protected by strict security protocols and multi-layer encryption.</p>
+        <p class="mt-2 text-sm text-gray-600">Our special package has always proven to be highly comprehensive, appropriately diagnostic, and effectively therapeutic.</p>
       </div>
     </div>
   </div>
@@ -1267,9 +1281,9 @@ html, body {
                muted
                onclick="openVideoModal('/assets/video.a7e4c4d5715dde0010fe.mp4')">
         </video>
-        <h3 class="polaroid-title">Integrated Science Book</h3>
-        <p class="polaroid-text">Comprehensive lessons + solved questions.</p>
-        <button class="polaroid-btn">GHS 45 - Buy</button>
+        <h3 class="polaroid-title">Beacon of the Light</h3>
+        <p class="polaroid-text">The Literature book, officially approved by NACCA for use in schools by current Basic 7&8</p>
+        <button class="polaroid-btn">GHS 60 for All - Buy</button>
       </div>
 
       <!-- Image Card -->
@@ -1278,8 +1292,8 @@ html, body {
              class="w-full h-24 rounded-md object-cover cursor-pointer"
              onclick="openImageModal('./assets/beacon of the light.jpg')">
         <h3 class="polaroid-title">Beacon of The Light</h3>
-        <p class="polaroid-text">Problem-based approach for JHS & SHS.</p>
-        <button class="polaroid-btn">GHS 40 - Buy</button>
+        <p class="polaroid-text">Problem-based approach for JHS By Excellence Publications.</p>
+        <button class="polaroid-btn">GHS 60 - Buy</button>
       </div>
     </div>
 
@@ -1305,8 +1319,9 @@ html, body {
         <img src="./assets/FLYER DEC.jpg"
              class="w-full h-24 rounded-md object-cover cursor-pointer"
              onclick="openImageModal('./assets/FLYER DEC.jpg')">
-        <h3 class="mt-2 font-semibold text-gray-900 text-sm leading-tight">Mock Exams Registration</h3>
+        <h3 class="mt-2 font-semibold text-gray-900 text-sm leading-tight">Gamma Mock Exams</h3>
         <p class="text-[11px] text-gray-600 mt-1">Secure your candidate slot for the next mock session.</p>
+              <p class="text-[11px] text-gray-600 mt-1"> <b>DATE:</b> DECEMBER 8TH - 12TH, 2025</p>
         <button class="w-full mt-2 text-[11px] bg-[#0000FF] text-white py-1.5 rounded-md hover:bg-[#001acc]">Register</button>
       </div>
 
@@ -1314,8 +1329,9 @@ html, body {
         <img src="./assets/FLYER DEC.jpg"
              class="w-full h-24 rounded-md object-cover cursor-pointer"
              onclick="openImageModal('./assets/FLYER DEC.jpg')">
-        <h3 class="mt-2 font-semibold text-gray-900 text-sm leading-tight">Lesson Notes Flyer</h3>
-        <p class="text-[11px] text-gray-600 mt-1">Printable classroom teaching resources.</p>
+        <h3 class="mt-2 font-semibold text-gray-900 text-sm leading-tight">End of First Term Exams</h3>
+        <p class="text-[11px] text-gray-600 mt-1">Secure your candidate slot for the next mock session.</p>
+        <p class="text-[11px] text-gray-600 mt-1"> <b>DATE:</b> DECEMBER 8TH - 12TH, 2025</p>
         <button class="w-full mt-2 text-[11px] bg-[#e63946] text-white py-1.5 rounded-md hover:bg-[#c92a36]">Buy</button>
       </div>
     </div>
@@ -1413,7 +1429,7 @@ html, body {
         Our clients are our best ambassadors
       </h2>
       <p class="text-gray-600 mt-3 max-w-2xl">
-        Our partner schools’ success speaks for itself — every school that joins our exams becomes our strongest advocate.
+        Our partner schools’ success speaks for itself every school that joins our exams becomes our strongest advocate.
       </p>
     </div>
 
@@ -1427,13 +1443,13 @@ html, body {
         <div class="absolute w-2/3 h-2/3 rounded-full border border-gray-50"></div>
 
         <!-- Avatar positions -->
-        <img src="https://randomuser.me/api/portraits/men/75.jpg" data-index="0"
+        <img src="https://i.pravatar.cc/150?img=16" data-index="0"
           class="profile absolute top-0 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full ring-4 ring-white border-2 border-blue-500 shadow-lg cursor-pointer transition-transform hover:scale-105">
-        <img src="https://randomuser.me/api/portraits/women/68.jpg" data-index="1"
+        <img src="https://randomuser.me/api/portraits/women/62.jpg" data-index="1"
           class="profile absolute right-0 top-1/2 -translate-y-1/2 w-20 h-20 rounded-full ring-4 ring-white border-2 border-transparent shadow-lg cursor-pointer transition-transform hover:scale-105">
-        <img src="https://randomuser.me/api/portraits/men/66.jpg" data-index="2"
+        <img src="https://randomuser.me/api/portraits/men/31.jpg" data-index="2"
           class="profile absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full ring-4 ring-white border-2 border-transparent shadow-lg cursor-pointer transition-transform hover:scale-105">
-        <img src="https://randomuser.me/api/portraits/women/57.jpg" data-index="3"
+        <img src="https://ui-avatars.com/api/?name=Crystal+Heights+Heights&background=00000F&color=fff&size=128" data-index="3"
           class="profile absolute left-0 top-1/2 -translate-y-1/2 w-20 h-20 rounded-full ring-4 ring-white border-2 border-transparent shadow-lg cursor-pointer transition-transform hover:scale-105">
        
       </div>
@@ -1446,7 +1462,7 @@ html, body {
         </svg>
 
         <blockquote id="testimonialText" class="text-lg md:text-xl text-gray-700 italic leading-relaxed relative z-10">
-          “Participating in the National Academic Exams improved our students’ confidence and performance tremendously.”
+          “Participating in the recent mock exams improved our students’ confidence and performance tremendously.”
         </blockquote>
         <p id="testimonialName" class="mt-6 text-gray-900 font-semibold text-lg">Ridgeview Academy</p>
         <p id="testimonialRole" class="text-gray-500 text-sm">Head Teacher – Accra</p>
@@ -1599,7 +1615,7 @@ html, body {
         Subscribe to Our <span class="text-blue-400">Weekly Insights</span>
       </h2>
       <p class="text-blue-100 text-lg">
-        Join our community to receive exclusive updates, learning resources, and growth tips — straight to your inbox.
+        Join our community to receive exclusive updates on exams,  learning resources, and growth tips straight to your inbox.
       </p>
 
       <!-- FIXED ALIGNMENT -->
@@ -1635,7 +1651,7 @@ html, body {
 
       <button type="submit"
               class="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition">
-        Subscribe Now
+        Join Now
       </button>
 
       <p id="statusMessage" class="text-center text-sm mt-2"></p>
@@ -1692,13 +1708,97 @@ html, body {
   </div>
 </section>
 
+<footer id="footer" class="scroll-animate bg-white text-[#0A0A14] pt-16 pb-10 px-6 md:px-16">
 
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
 
+  <!-- LOGO + DESCRIPTION + SOCIALS -->
+<div class="space-y-5">
+  <img src="https://via.placeholder.com/80" class="h-20 w-auto" alt="Logo">
 
-<!-- Optional Footer Example -->
-<footer class="bg-blue-950 text-center text-white py-8">
-  <p>© 2025 Best Brain Examinations. All Rights Reserved.</p>
+  <p class="text-sm leading-relaxed max-w-xs text-gray-600">
+    We provide quality examinations, academic guidance and structured learning resources to empower students and schools across Ghana.
+  </p>
+
+  <!-- SOCIAL MEDIA ICONS -->
+  <div class="flex items-center gap-4 mt-4">
+
+    <a href="https://web.facebook.com/bestbrain.examinationskonsortium.77" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 text-[#0000FF] hover:bg-[#0000FF] hover:text-white transition">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+
+    <a href="https://twitter.com/bestbrainghana" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 text-[#0000FF] hover:bg-[#0000FF] hover:text-white transition">
+      <i class="fab fa-twitter"></i>
+    </a>
+
+    <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 text-[#0000FF] hover:bg-[#0000FF] hover:text-white transition">
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+
+    <a href="https://www.instagram.com/bestbrainghana/" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 text-[#0000FF] hover:bg-[#0000FF] hover:text-white transition">
+      <i class="fab fa-instagram"></i>
+    </a>
+
+  </div>
+</div>
+
+    <!-- CONTACT INFO -->
+    <div>
+      <h3 class="text-lg font-semibold mb-3">Contact Us</h3>
+      <div class="w-10 h-1 bg-[#0000FF] mb-4"></div>
+      <ul class="space-y-3 text-sm text-gray-600">
+        <li class="flex items-center gap-3">
+          <i class="fas fa-map-marker-alt text-[#e63946]"></i> Accra, Ghana
+        </li>
+        <li class="flex items-center gap-3">
+          <i class="fas fa-phone text-[#e63946]"></i> 0207 732 900
+        </li>
+        <li class="flex items-center gap-3">
+          <i class="fas fa-phone text-[#e63946]"></i> 0249 273 049
+        </li>
+        <li class="flex items-center gap-3">
+          <i class="fas fa-envelope text-[#e63946]"></i> bbexaminerss@gmail.com
+        </li>
+        <li class="flex items-center gap-3">
+          <i class="fab fa-whatsapp text-[#e63946]"></i> 025 661 3646
+
+        </li>
+      </ul>
+    </div>
+
+    <!-- USEFUL LINKS -->
+    <div>
+      <h3 class="text-lg font-semibold mb-3">Useful Links</h3>
+      <div class="w-10 h-1 bg-[#0000FF] mb-4"></div>
+      <ul class="space-y-3 text-sm text-gray-600">
+        <li><a href="#about" class="hover:text-[#0000FF]">About Us</a></li>
+        <li><a href="#services" class="hover:text-[#0000FF]">Services</a></li>
+        <li><a href="#store" class="hover:text-[#0000FF]">Resources</a></li>
+        <li><a href="#team" class="hover:text-[#0000FF]">Team</a></li>
+      </ul>
+    </div>
+
+    <!-- WORKING HOURS -->
+    <div>
+      <h3 class="text-lg font-semibold mb-3">Working Hours</h3>
+      <div class="w-10 h-1 bg-[#0000FF] mb-4"></div>
+      <ul class="space-y-3 text-sm text-gray-600">
+        <li><strong class="text-[#0A0A14]">Monday – Friday:</strong><br>8:30 AM – 5:00 PM</li>
+        <li><strong class="text-[#0A0A14]">Saturday & Sunday:</strong> Closed</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- COPYRIGHT -->
+  <div class="border-t border-gray-200 mt-14 pt-5 text-center text-xs text-gray-500">
+    © 2025 Best Brain Examinations Konsortium — All Rights Reserved.
+  </div>
+
 </footer>
+
+<!-- FONT AWESOME -->
+<script src="https://kit.fontawesome.com/a2e0b9e5a8.js" crossorigin="anonymous"></script>
 
 
 
@@ -1709,6 +1809,19 @@ html, body {
 
 
 <script>
+
+const scrollItems = document.querySelectorAll('.scroll-animate');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.2 });
+
+scrollItems.forEach(item => observer.observe(item));
+
 
 /* SLIDER */
 const slides = document.querySelectorAll('.hero-slide');
@@ -1951,12 +2064,12 @@ const testimonials = [
   {
     text: "The examination process was seamless and professional. It has set a benchmark for our internal assessments.",
     name: "Faith Academy",
-    role: "Principal – Takoradi",
+    role: "Head Master – Takoradi",
   },
   {
     text: "We loved how transparent and well-coordinated everything was. Parents were impressed with the entire experience.",
     name: "Crystal Heights School",
-    role: "Director – Cape Coast",
+    role: "Exams Coordinator – Cape Coast",
   },
   {
     text: "This exam has encouraged teamwork and better preparation habits among our pupils. We recommend it highly!",
@@ -2440,13 +2553,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const officeName = document.getElementById("officeAddress");
 
     if (region === "accra") {
-      officeName.textContent = "Greater Accra Office — Achimota Apenkwa";
+      officeName.textContent = "Greater Accra Office — Achimota Apenkwa | 0207732900";
     } 
     else if (region === "ashanti") {
-      officeName.textContent = "Ashanti Region Office — Kumasi Office near Oduom";
+      officeName.textContent = "Ashanti Region Office — Kumasi Office near Oduom | 025 661 3646 ";
     } 
     else if (region === "central") {
-      officeName.textContent = "Central Region Office — Kasoa nyanyano road around Melcom Mall";
+      officeName.textContent = "Central Region Office — Kasoa nyanyano road around Melcom Mall | 055 314 0501 ";
     }
 
     // Animate appearance
