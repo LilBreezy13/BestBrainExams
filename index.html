@@ -7,19 +7,102 @@
 
 <!-- Add this in <head> (only once) -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
 <title>Best Brain Examinations</title>
 <script src="https://cdn.tailwindcss.com"></script>
+
+
 <style>
-  body { 
-  font-family: 'Playfair Display', serif; 
-  overflow-x: hidden;
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Helvetica Neue", "SF Pro Display", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  color: #111;
+  background: #fff;
+  scroll-behavior: smooth;
 }
+
 
   .nav-link { color: #0000FF; font-weight: 600; }
   .nav-link:hover { color: #e63946; transition: 0.3s; }
   .dropdown-menu { display: none; flex-direction: column; background: white; border-radius: .5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
   .dropdown-menu.show { display: flex; }
+
+  /* === Apple-style dropdown expansion === */
+.navbar {
+  position: relative;
+  transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: visible;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 200px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  padding: 0.8rem 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  z-index: 100;
+}
+
+/* Hover show (desktop only) */
+@media (min-width: 768px) {
+  .dropdown:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(8px);
+  }
+
+  /* Smooth navbar height expansion */
+  .dropdown:hover .navbar {
+    height: auto;
+  }
+
+  /* Dropdown links styling */
+  .dropdown-menu li a {
+    display: block;
+    padding: 10px 18px;
+    color: #111;
+    text-align: left;
+    transition: background 0.25s ease;
+  }
+
+  .dropdown-menu li a:hover {
+    background: #f5f5f7;
+  }
+}
+
+/* For mobile: keep your existing dropdown toggle behavior */
+@media (max-width: 767px) {
+  .dropdown-menu {
+    position: static;
+    transform: none;
+    box-shadow: none;
+    border-radius: 0;
+    opacity: 1;
+    pointer-events: auto;
+    display: none;
+  }
+  .dropdown-menu.show {
+    display: block;
+  }
+}
+
 
   /* HERO SLIDER */
   .hero-slide {
@@ -118,6 +201,58 @@
 
 
   /* WHY CHOOSE US >///////////////////  */
+
+  /* === WHY CHOOSE US GRID FIX === */
+#why .cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  align-items: stretch;
+  justify-items: center;
+  width: 100%;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
+#why .card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  padding: 1.8rem 1.2rem;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+}
+
+#why .card img {
+  max-width: 80px;
+  margin-bottom: 1rem;
+}
+
+#why .card h4 {
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+#why .card p {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Mobile fix — ensure cards don’t overlap */
+@media (max-width: 600px) {
+  #why .cards-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.2rem;
+  }
+
+  #why .card {
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
    /* Why-choose custom styles (paste into your existing style tag) */
   .why-section {
     background: #f8fafc; /* very light gray background to match the UI */
@@ -227,6 +362,25 @@
     padding: 16px !important;
   }
 
+
+  /* === WHY CHOOSE US CARD ANIMATIONS === */
+#why .card {
+  opacity: 0;
+  transform: translateY(-50px) scale(0.95);
+  will-change: transform, opacity;
+}
+
+#why .card.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+#why .card.out {
+  opacity: 0.6;
+  transform: scale(0.92);
+}
+
+
   /* Prevent ANY horizontal scroll on small screens */
   body, html {
     width: 100%;
@@ -251,6 +405,124 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   transition: transform .25s ease, box-shadow .25s ease;
 }
+
+
+/* === QUICK PURCHASE — force vertical stacking on small screens === */
+/* Paste this into your existing <style> (after other rules) */
+
+@media (max-width: 767px) {
+  /* Target the books tab container and any tab-section inside #store */
+  #booksSection,
+  #store #booksSection,
+  #store .tab-section#booksSection,
+  #store .tab-section,
+  .tab-section#booksSection {
+    display: grid !important;
+    grid-template-columns: 1fr !important;   /* one column only */
+    grid-auto-rows: auto !important;
+    gap: 1rem !important;
+    padding-left: 0.8rem !important;
+    padding-right: 0.8rem !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Make each card full width and stop them from keeping old sizing */
+  #booksSection .polaroid-card,
+  #booksSection .polaroid-img,
+  #booksSection .card,
+  #booksSection .polaroid-card > * {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Make images responsive inside the stacked cards */
+  #booksSection .polaroid-img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  /* Ensure buttons/controls expand full width nicely */
+  #booksSection .polaroid-btn,
+  #booksSection .polaroid-card .polaroid-btn {
+    width: 100% !important;
+    display: block !important;
+  }
+}
+
+/* Extra small phones — be explicit for tailwind 'sm' breakpoint */
+@media (max-width: 639px) {
+  #booksSection,
+  #store #booksSection,
+  #store .tab-section#booksSection {
+    padding-left: 0.6rem !important;
+    padding-right: 0.6rem !important;
+    gap: 0.8rem !important;
+  }
+}
+
+
+/* === QUICK PURCHASE — stack vertically on mobile (without breaking tab toggle) === */
+
+@media (max-width: 767px) {
+  /* Only apply grid layout to visible (active) tab-section */
+  #store .tab-section.active#booksSection,
+  #store .tab-section.active#videosSection,
+  #store .tab-section.active#imagesSection {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: auto !important;
+    gap: 1rem !important;
+    padding: 0.8rem !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Keep hidden tab-sections invisible */
+  #store .tab-section:not(.active) {
+    display: none !important;
+  }
+
+  /* Ensure full width for cards */
+  #booksSection .polaroid-card,
+  #videosSection .polaroid-card,
+  #imagesSection .polaroid-card {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Responsive images */
+  #booksSection .polaroid-img,
+  #videosSection .polaroid-img,
+  #imagesSection .polaroid-img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  /* Buttons full width */
+  #booksSection .polaroid-btn,
+  #videosSection .polaroid-btn,
+  #imagesSection .polaroid-btn {
+    width: 100% !important;
+    display: block !important;
+  }
+}
+
+/* Extra small fine-tune */
+@media (max-width: 639px) {
+  #store .tab-section.active#booksSection,
+  #store .tab-section.active#videosSection,
+  #store .tab-section.active#imagesSection {
+    padding: 0.6rem !important;
+    gap: 0.8rem !important;
+  }
+}
+
+
+
+
 .polaroid-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 18px rgba(0,0,0,0.12);
@@ -474,6 +746,201 @@
   transform: translateY(0);
 }
 
+/* === ULTRA-SMOOTH SCROLL ANIMATIONS (Apple-style) === */
+.scroll-animate {
+  opacity: 0;
+  transform: scale(0.96) translateY(40px);
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.9s ease-out;
+  will-change: transform, opacity;
+}
+
+.scroll-animate.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Slightly different movement styles for variety */
+.scroll-zoom   { transform: scale(0.94); }
+.scroll-fall   { transform: translateY(-35px) scale(0.97); }
+.scroll-float  { transform: translateY(60px) scale(0.97); }
+
+.scroll-zoom.visible,
+.scroll-fall.visible,
+.scroll-float.visible {
+  transform: translateY(0) scale(1);
+}
+
+/* Make transitions smoother on mobile */
+@media (max-width: 600px) {
+  .scroll-animate {
+    transition-duration: 0.8s;
+    transform: scale(0.97) translateY(35px);
+  }
+}
+
+
+/* === APPLE-STYLE SCROLL + PARALLAX EFFECTS === */
+.scroll-animate {
+  opacity: 0;
+  transform: scale(0.96) translateY(40px);
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 1s ease-out;
+  will-change: transform, opacity;
+}
+
+.scroll-animate.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Variant motions for depth */
+.scroll-zoom   { transform: scale(0.94); }
+.scroll-fall   { transform: translateY(-35px) scale(0.97); }
+.scroll-float  { transform: translateY(60px) scale(0.97); }
+
+.scroll-zoom.visible,
+.scroll-fall.visible,
+.scroll-float.visible {
+  transform: translateY(0) scale(1);
+}
+
+/* === PARALLAX BACKGROUND === */
+.parallax {
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  transform: translateZ(0);
+}
+
+.parallax::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.1);
+  pointer-events: none;
+}
+
+/* smoother transitions on mobile */
+@media (max-width: 600px) {
+  .scroll-animate {
+    transition-duration: 0.8s;
+    transform: scale(0.97) translateY(35px);
+  }
+  .parallax {
+    background-attachment: scroll; /* fixes iOS lag */
+  }
+}
+
+/* === BOOKS, VIDEOS & IMAGES RESPONSIVE GRID FIX === */
+
+/* Desktop: 3 or 4 cards in a row */
+.books-section .cards-container,
+.videos-section .cards-container,
+.images-section .cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  align-items: stretch;
+  justify-items: center;
+  width: 100%;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
+/* Mobile: stack vertically (like Upcoming) */
+@media (max-width: 768px) {
+  .books-section .cards-container,
+  .videos-section .cards-container,
+  .images-section .cards-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem 0.8rem;
+  }
+
+  .books-section .card,
+  .videos-section .card,
+  .images-section .card {
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+.books-section .card,
+.videos-section .card,
+.images-section .card {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: transform 0.8s ease, opacity 0.8s ease;
+  will-change: transform, opacity;
+}
+
+.books-section .card.visible,
+.videos-section .card.visible,
+.images-section .card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   APPLE-SMOOTH TAB ANIMATIONS + RESPONSIVE FIX
+============================================================ */
+.tab-section {
+  opacity: 0;
+  transform: translateY(25px) scale(0.98);
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.6s,
+    height 0.6s ease;
+  will-change: opacity, transform;
+}
+
+.tab-section.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  visibility: visible;
+  height: auto;
+  overflow: visible;
+  display: grid !important;
+}
+
+/* Stack vertically on mobile */
+@media (max-width: 768px) {
+  #store .tab-section.active {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+  }
+}
+
+/* Smooth hover style for buttons */
+.tab-btn {
+  transition: all 0.3s ease;
+}
+.tab-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Optional: fade-in subtle effect for new content */
+@keyframes tabFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.tab-section.active {
+  animation: tabFadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
 
 </style>
 </head>
@@ -481,6 +948,7 @@
 <body class="bg-white text-[#0000FF]">
 
 <!-- NAVBAR -->
+ <!-- <header class="navbar"> -->
 <header class="fixed w-full bg-white shadow-md z-50">
   <div class="flex items-center justify-between px-6 py-5 md:py-6">
 
@@ -736,8 +1204,6 @@
   </div> <!-- /container -->
 </section>
 
-
-
 <!-- ===================== QUICK PURCHASE SECTION ===================== -->
 <section id="store" class="py-16 bg-white">
   <div class="max-w-7xl mx-auto px-6 lg:px-12">
@@ -757,44 +1223,37 @@
       <button id="tabUpcoming" class="tab-btn bg-gray-200 text-gray-700 text-sm px-4 py-1.5 rounded-full">Upcoming</button>
     </div>
 
-   <!-- BOOKS SECTION -->
-<div id="booksSection" class="tab-section grid grid-cols-2 sm:grid-cols-3 gap-4">
+    <!-- BOOKS SECTION -->
+    <div id="booksSection" class="tab-section active grid grid-cols-2 sm:grid-cols-3 gap-4">
+      <!-- Video Card -->
+      <div class="polaroid-card">
+        <video class="polaroid-img"
+               src="/assets/video.a7e4c4d5715dde0010fe.mp4"
+               muted
+               onclick="openVideoModal('/assets/video.a7e4c4d5715dde0010fe.mp4')">
+        </video>
+        <h3 class="polaroid-title">Integrated Science Book</h3>
+        <p class="polaroid-text">Comprehensive lessons + solved questions.</p>
+        <button class="polaroid-btn">GHS 45 - Buy</button>
+      </div>
 
-<!-- Video Card -->
-<div class="polaroid-card">
-  <video class="polaroid-img"
-         src="/assets/video.a7e4c4d5715dde0010fe.mp4"
-         muted
-         onclick="openVideoModal('/assets/video.a7e4c4d5715dde0010fe.mp4')">
-  </video>
-
-  <h3 class="polaroid-title">Integrated Science Book</h3>
-  <p class="polaroid-text">Comprehensive lessons + solved questions.</p>
-  <button class="polaroid-btn">GHS 45 - Buy</button>
-</div>
-
-  <!-- Image Card -->
-  <div class="polaroid-card">
-   <img src="./assets/FLYER DEC.jpg"
-     class="w-full h-24 rounded-md object-cover cursor-pointer"
-     onclick="openImageModal('./assets/FLYER DEC.jpg')">
-
-    <h3 class="polaroid-title">Mathematics Workbook</h3>
-    <p class="polaroid-text">Problem-based approach for JHS & SHS.</p>
-    <button class="polaroid-btn">GHS 40 - Buy</button>
-  </div>
-
-</div>
-
+      <!-- Image Card -->
+      <div class="polaroid-card">
+        <img src="./assets/FLYER DEC.jpg"
+             class="w-full h-24 rounded-md object-cover cursor-pointer"
+             onclick="openImageModal('./assets/FLYER DEC.jpg')">
+        <h3 class="polaroid-title">Mathematics Workbook</h3>
+        <p class="polaroid-text">Problem-based approach for JHS & SHS.</p>
+        <button class="polaroid-btn">GHS 40 - Buy</button>
+      </div>
+    </div>
 
     <!-- LESSON NOTES -->
-    <div id="notesSection" class="tab-section hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-
+    <div id="notesSection" class="tab-section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
       <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition">
-       <img src="./assets/FLYER DEC.jpg"
-     class="w-full h-24 rounded-md object-cover cursor-pointer"
-     onclick="openImageModal('./assets/FLYER DEC.jpg')">
-
+        <img src="./assets/FLYER DEC.jpg"
+             class="w-full h-24 rounded-md object-cover cursor-pointer"
+             onclick="openImageModal('./assets/FLYER DEC.jpg')">
         <h3 class="mt-3 font-semibold text-gray-900 text-sm">Lesson Notes (All Subjects)</h3>
         <p class="text-xs text-gray-600 mt-1">Clean formatting and editable for teaching.</p>
         <div class="flex justify-between items-center mt-3">
@@ -802,61 +1261,44 @@
           <button class="text-xs bg-[#e63946] text-white px-3 py-1 rounded-md hover:bg-[#c92a36]">Order</button>
         </div>
       </div>
-
     </div>
 
-<!-- UPCOMING -->
-<div id="upcomingSection" class="tab-section hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+    <!-- UPCOMING -->
+    <div id="upcomingSection" class="tab-section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+      <div class="bg-white border border-gray-200 rounded-lg p-3 shadow-sm hover:shadow-md transition">
+        <img src="./assets/FLYER DEC.jpg"
+             class="w-full h-24 rounded-md object-cover cursor-pointer"
+             onclick="openImageModal('./assets/FLYER DEC.jpg')">
+        <h3 class="mt-2 font-semibold text-gray-900 text-sm leading-tight">Mock Exams Registration</h3>
+        <p class="text-[11px] text-gray-600 mt-1">Secure your candidate slot for the next mock session.</p>
+        <button class="w-full mt-2 text-[11px] bg-[#0000FF] text-white py-1.5 rounded-md hover:bg-[#001acc]">Register</button>
+      </div>
 
-  <div class="bg-white border border-gray-200 rounded-lg p-3 shadow-sm hover:shadow-md transition">
-   <img src="./assets/FLYER DEC.jpg"
-     class="w-full h-24 rounded-md object-cover cursor-pointer"
-     onclick="openImageModal('./assets/FLYER DEC.jpg')">
+      <div class="bg-white border border-gray-200 rounded-lg p-3 shadow-sm hover:shadow-md transition">
+        <img src="./assets/FLYER DEC.jpg"
+             class="w-full h-24 rounded-md object-cover cursor-pointer"
+             onclick="openImageModal('./assets/FLYER DEC.jpg')">
+        <h3 class="mt-2 font-semibold text-gray-900 text-sm leading-tight">Lesson Notes Flyer</h3>
+        <p class="text-[11px] text-gray-600 mt-1">Printable classroom teaching resources.</p>
+        <button class="w-full mt-2 text-[11px] bg-[#e63946] text-white py-1.5 rounded-md hover:bg-[#c92a36]">Buy</button>
+      </div>
+    </div>
 
-    <h3 class="mt-2 font-semibold text-gray-900 text-sm leading-tight">Mock Exams Registration</h3>
-    <p class="text-[11px] text-gray-600 mt-1">Secure your candidate slot for the next mock session.</p>
-    <button class="w-full mt-2 text-[11px] bg-[#0000FF] text-white py-1.5 rounded-md hover:bg-[#001acc]">Register</button>
-  </div>
+    <!-- IMAGE MODAL -->
+    <div id="imageModal" class="hidden fixed inset-0 bg-black/80 z-[999] flex items-center justify-center p-4">
+      <img id="imageModalContent" class="max-w-full max-h-full rounded-xl shadow-2xl">
+      <button onclick="closeImageModal()" class="absolute top-5 right-6 text-white text-3xl font-bold hover:text-[#0000FF] transition">✕</button>
+    </div>
 
-  <div class="bg-white border border-gray-200 rounded-lg p-3 shadow-sm hover:shadow-md transition">
-   <img src="./assets/FLYER DEC.jpg"
-     class="w-full h-24 rounded-md object-cover cursor-pointer"
-     onclick="openImageModal('./assets/FLYER DEC.jpg')">
-
-    <h3 class="mt-2 font-semibold text-gray-900 text-sm leading-tight">Lesson Notes Flyer</h3>
-    <p class="text-[11px] text-gray-600 mt-1">Printable classroom teaching resources.</p>
-    <button class="w-full mt-2 text-[11px] bg-[#e63946] text-white py-1.5 rounded-md hover:bg-[#c92a36]">Buy</button>
-  </div>
-
-</div>
-
-<!-- IMAGE MODAL -->
-<div id="imageModal" class="hidden fixed inset-0 bg-black/80 z-[999] flex items-center justify-center p-4">
-  <img id="imageModalContent" class="max-w-full max-h-full rounded-xl shadow-2xl">
-  <button onclick="closeImageModal()" class="absolute top-5 right-6 text-white text-3xl font-bold">✕</button>
-</div>
-
-
-
-<!-- FULLSCREEN VIDEO PLAYER MODAL -->
-<div id="videoModal" class="hidden fixed inset-0 bg-black/90 z-[999] flex items-center justify-center p-4">
-
-  <!-- CLOSE BUTTON (ALWAYS VISIBLE) -->
-  <button onclick="closeVideoModal()"
-    class="absolute top-4 right-4 text-white text-4xl font-bold z-[1000] hover:text-[#0000FF] transition">
-    ✕
-  </button>
-
-  <video id="videoModalContent"
-         class="w-full max-w-3xl max-h-[85vh] rounded-xl shadow-2xl"
-         controls autoplay>
-  </video>
-
-</div>
-
+    <!-- FULLSCREEN VIDEO PLAYER MODAL -->
+    <div id="videoModal" class="hidden fixed inset-0 bg-black/90 z-[999] flex items-center justify-center p-4">
+      <button onclick="closeVideoModal()" class="absolute top-4 right-4 text-white text-4xl font-bold z-[1000] hover:text-[#0000FF] transition">✕</button>
+      <video id="videoModalContent" class="w-full max-w-3xl max-h-[85vh] rounded-xl shadow-2xl" controls autoplay></video>
+    </div>
 
   </div>
 </section>
+
 
 <!-- ===================== PAYMENTS & DELIVERY SECTION ===================== -->
 <section id="payments" class="py-20 bg-[#f8fafc]">
@@ -1443,6 +1885,176 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+<script>
+/* === Apple-style smooth scroll animations === */
+document.addEventListener('DOMContentLoaded', () => {
+  const sections = [
+    { sel: '#why',          cls: 'scroll-zoom'  },
+    { sel: '#payments',     cls: 'scroll-fall'  },
+    { sel: '#testimonials', cls: 'scroll-float' },
+    // add others if needed
+  ];
+
+  sections.forEach(({ sel, cls }) => {
+    const el = document.querySelector(sel);
+    if (el) el.classList.add('scroll-animate', cls);
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const el = entry.target;
+      if (entry.isIntersecting) {
+        el.classList.add('visible');
+      } else {
+        el.classList.remove('visible');
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -10% 0px'
+  });
+
+  document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
+});
+</script>
+
+<script>
+/* === SMOOTH SCROLL & PARALLAX ENGINE === */
+document.addEventListener('DOMContentLoaded', () => {
+  const sections = [
+    { sel: '#why', cls: 'scroll-zoom' },
+    { sel: '#payments', cls: 'scroll-fall' },
+    { sel: '#testimonials', cls: 'scroll-float' }
+  ];
+
+  sections.forEach(({ sel, cls }) => {
+    const el = document.querySelector(sel);
+    if (el) el.classList.add('scroll-animate', cls);
+  });
+
+  // Intersection Observer for reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const el = entry.target;
+      if (entry.isIntersecting) el.classList.add('visible');
+      else el.classList.remove('visible');
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+
+  document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
+
+  // === PARALLAX HANDLER ===
+  const parallaxElems = document.querySelectorAll('.parallax');
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    parallaxElems.forEach(el => {
+      const speed = 0.3; // lower = slower background (depth feel)
+      const offset = scrollY * speed;
+      el.style.backgroundPositionY = `${offset}px`;
+    });
+  }, { passive: true });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const cards = document.querySelectorAll('#why .card');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const card = entry.target;
+
+      if (entry.isIntersecting) {
+        // When card enters viewport → fall-in
+        card.classList.add('visible');
+        card.classList.remove('out');
+      } else {
+        // When card leaves viewport (scroll down) → zoom-out
+        const rect = entry.boundingClientRect;
+        if (rect.top < 0) {
+          card.classList.remove('visible');
+          card.classList.add('out');
+        }
+      }
+    });
+  }, { threshold: 0.2 });
+
+  cards.forEach(card => observer.observe(card));
+});
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const tabs = {
+    tabBooks: document.getElementById("booksSection"),
+    tabNotes: document.getElementById("notesSection"),
+    tabUpcoming: document.getElementById("upcomingSection"),
+  };
+
+  const buttons = document.querySelectorAll(".tab-btn");
+
+  // === Tab Switching ===
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      // Reset buttons
+      buttons.forEach(b => {
+        b.classList.remove("bg-[#0000FF]", "text-white");
+        b.classList.add("bg-gray-200", "text-gray-700");
+      });
+
+      // Hide all tab sections
+      Object.values(tabs).forEach(section => section.classList.remove("active"));
+
+      // Activate the correct one
+      const active = tabs[btn.id];
+      if (active) active.classList.add("active");
+
+      // Highlight clicked button
+      btn.classList.add("bg-[#0000FF]", "text-white");
+      btn.classList.remove("bg-gray-200", "text-gray-700");
+    });
+  });
+
+  // === Image Modal ===
+  window.openImageModal = function (src) {
+    const modal = document.getElementById("imageModal");
+    const img = document.getElementById("imageModalContent");
+    img.src = src;
+    modal.classList.remove("hidden");
+
+    // close when clicking outside image
+    modal.addEventListener("click", e => {
+      if (e.target === modal) closeImageModal();
+    });
+  };
+
+  window.closeImageModal = function () {
+    document.getElementById("imageModal").classList.add("hidden");
+  };
+
+  // === Video Modal ===
+  window.openVideoModal = function (src) {
+    const modal = document.getElementById("videoModal");
+    const video = document.getElementById("videoModalContent");
+    video.src = src;
+    modal.classList.remove("hidden");
+
+    // close when clicking outside video
+    modal.addEventListener("click", e => {
+      if (e.target === modal) closeVideoModal();
+    });
+  };
+
+  window.closeVideoModal = function () {
+    const modal = document.getElementById("videoModal");
+    const video = document.getElementById("videoModalContent");
+    video.pause();
+    modal.classList.add("hidden");
+  };
+});
+</script>
 
 </body>
 </html>
