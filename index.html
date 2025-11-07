@@ -1586,6 +1586,127 @@ html, body {
 </section>
 
 
+<section id="newsletter"
+  class="relative bg-gradient-to-br from-[#002a80] via-[#0035a4] to-[#0045cc] py-16 px-4 md:px-12 overflow-hidden text-white">
+
+  <div class="max-w-6xl mx-auto bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl rounded-3xl p-8 md:p-14 flex flex-col md:flex-row items-center gap-10"
+       data-aos="fade-up" data-aos-duration="1200">
+
+    <!-- LEFT SIDE CONTENT -->
+    <div class="md:w-1/2 w-full space-y-6 text-center md:text-left">
+      <p class="text-blue-200 font-semibold uppercase tracking-widest">Stay in the Loop</p>
+      <h2 class="text-3xl md:text-4xl font-bold leading-tight">
+        Subscribe to Our <span class="text-blue-400">Weekly Insights</span>
+      </h2>
+      <p class="text-blue-100 text-lg">
+        Join our community to receive exclusive updates, learning resources, and growth tips — straight to your inbox.
+      </p>
+
+      <!-- FIXED ALIGNMENT -->
+      <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start sm:space-x-3 pt-4 space-y-3 sm:space-y-0 w-full">
+        <input 
+          type="email" 
+          id="quickEmail" 
+          placeholder="Your Email Address"
+          class="w-full sm:w-2/3 px-4 py-3 rounded-full border border-blue-200 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <button 
+          onclick="scrollToForm()" 
+          class="w-full sm:w-1/3 bg-blue-500 hover:bg-blue-600 transition text-white font-semibold rounded-full py-3">
+          Get Started
+        </button>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE FORM CARD -->
+    <form id="newsletterForm"
+          class="md:w-1/2 w-full bg-white rounded-2xl p-8 shadow-xl space-y-4 text-gray-800"
+          data-aos="fade-left" data-aos-duration="1400">
+
+      <h3 class="text-2xl font-bold text-blue-700 text-center mb-2">Join Our Mailing List</h3>
+
+      <input type="text" id="name" placeholder="Full Name"
+             class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+      <input type="email" id="email" placeholder="Email Address"
+             class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+      <textarea id="message" placeholder="Your Message (optional)"
+                class="w-full border border-gray-300 rounded-lg px-4 py-3 h-28 focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+
+      <button type="submit"
+              class="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition">
+        Subscribe Now
+      </button>
+
+      <p id="statusMessage" class="text-center text-sm mt-2"></p>
+    </form>
+  </div>
+</section>
+
+<section id="ghana-map"
+  class="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 py-16 px-4 text-white overflow-hidden">
+
+  <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+    
+    <!-- LEFT: Office Details Panel -->
+    <div class="lg:w-1/2 w-full text-center lg:text-left" data-aos="fade-right" data-aos-duration="1200">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Offices Across Ghana</h2>
+      <p class="text-blue-200 text-lg mb-8">Click any location on the map to see our office address.</p>
+      <div id="officeDetails" class="space-y-4">
+        <h3 id="officeTitle" class="text-2xl font-semibold text-white/90">Tap a location</h3>
+        <p id="officeAddress" class="text-blue-100 text-lg italic">Select a map marker to view office details.</p>
+      </div>
+    </div>
+
+    <!-- RIGHT: Map Panel -->
+    <div class="lg:w-1/2 w-full flex justify-center" data-aos="fade-left" data-aos-duration="1200">
+      <div class="relative w-full max-w-md">
+        <svg viewBox="0 0 400 500" class="w-full h-auto fill-white/20 stroke-white/50 stroke-2">
+          <path d="M50,30 L330,30 L360,200 L340,480 L70,480 L50,200 Z"></path>
+
+          <!-- Markers -->
+          <circle cx="290" cy="400" r="12" class="cursor-pointer fill-blue-400 hover:fill-blue-500 transition"
+                  onclick="showOffice('accra')" title="Greater Accra Office"></circle>
+          <circle cx="200" cy="260" r="12" class="cursor-pointer fill-yellow-400 hover:fill-yellow-500 transition"
+                  onclick="showOffice('ashanti')" title="Ashanti Office"></circle>
+          <circle cx="220" cy="370" r="12" class="cursor-pointer fill-green-400 hover:fill-green-500 transition"
+                  onclick="showOffice('central')" title="Central Region Office"></circle>
+        </svg>
+
+        <!-- Animated pulses -->
+        <div class="absolute top-[79%] left-[72%] w-6 h-6 bg-blue-400 rounded-full animate-ping opacity-70 pointer-events-none"></div>
+        <div class="absolute top-[52%] left-[50%] w-6 h-6 bg-yellow-400 rounded-full animate-ping opacity-70 pointer-events-none"></div>
+        <div class="absolute top-[73%] left-[55%] w-6 h-6 bg-green-400 rounded-full animate-ping opacity-70 pointer-events-none"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 BLUE PATTERN DIVIDER -->
+  <div class="relative w-full overflow-hidden mt-16" data-aos="fade-up" data-aos-duration="1000">
+    <img 
+      src="./assets/imgi_36_TSTM2.png" 
+      alt="Decorative African pattern"
+      class="w-full object-cover pattern-blue"
+      style="height: 80px;"
+    >
+  </div>
+</section>
+
+
+
+
+<!-- Optional Footer Example -->
+<footer class="bg-blue-950 text-center text-white py-8">
+  <p>© 2025 Best Brain Examinations. All Rights Reserved.</p>
+</footer>
+
+
+
+
+
+
+
+
 
 <script>
 
@@ -2242,6 +2363,102 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 5000);
 
   goToSlide(0);
+</script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+
+  // Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyBgS5s6SHMj4RqZwq5MxM0crT2t-XT2vbs",
+    authDomain: "scanparceltoday.firebaseapp.com",
+    projectId: "scanparceltoday",
+    storageBucket: "scanparceltoday.firebasestorage.app",
+    messagingSenderId: "537794506429",
+    appId: "1:537794506429:web:17b8d24e4ec5f770a9d1d4"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Scroll smoothly to form
+  window.scrollToForm = () => {
+    document.getElementById("newsletterForm").scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
+  const form = document.getElementById("newsletterForm");
+  const statusMessage = document.getElementById("statusMessage");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    if (!name || !email) {
+      statusMessage.textContent = "❌ Please fill in all required fields.";
+      statusMessage.className = "text-red-600 text-center text-sm";
+      return;
+    }
+
+    // ✅ Fixed email regex
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      statusMessage.textContent = "❌ Please enter a valid email address.";
+      statusMessage.className = "text-red-600 text-center text-sm";
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "newsletter_subscribers"), {
+        name,
+        email,
+        message,
+        timestamp: new Date()
+      });
+
+      statusMessage.textContent = "✅ Subscription successful! Thank you.";
+      statusMessage.className = "text-green-600 text-center text-sm";
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      statusMessage.textContent = "⚠️ Something went wrong. Try again.";
+      statusMessage.className = "text-red-600 text-center text-sm";
+    }
+  });
+
+  // Init animations
+  AOS.init();
+</script>
+
+
+<script>
+  // Simple map marker interaction
+  function showOffice(region) {
+    const officeName = document.getElementById("officeAddress");
+
+    if (region === "accra") {
+      officeName.textContent = "Greater Accra Office — Achimota Apenkwa";
+    } 
+    else if (region === "ashanti") {
+      officeName.textContent = "Ashanti Region Office — Kumasi Office near Oduom";
+    } 
+    else if (region === "central") {
+      officeName.textContent = "Central Region Office — Kasoa nyanyano road around Melcom Mall";
+    }
+
+    // Animate appearance
+    const officeDetails = document.getElementById("officeDetails");
+    officeDetails.classList.remove("opacity-0");
+    officeDetails.classList.add("opacity-100", "scale-105");
+    setTimeout(() => {
+      officeDetails.classList.remove("scale-105");
+    }, 300);
+  }
+
+  AOS.init();
 </script>
 </body>
 </html>
