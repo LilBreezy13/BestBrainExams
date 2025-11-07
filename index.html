@@ -26,8 +26,11 @@ html, body {
 }
 
 
-  .nav-link { color: #0000FF; font-weight: 600; }
+  .nav-link { color: #000000; font-weight: 600; }
   .nav-link:hover { color: #e63946; transition: 0.3s; }
+  /* .nav-link, a {
+    color: #000000 !important;
+  } */
   .dropdown-menu { display: none; flex-direction: column; background: white; border-radius: .5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
   .dropdown-menu.show { display: flex; }
 
@@ -942,6 +945,28 @@ html, body {
   animation: tabFadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+
+/* ====== COLLABORATORS SCROLLING SECTION ====== */
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-scroll {
+  display: flex;
+  width: max-content;
+  animation: scroll 30s linear infinite;
+}
+
+#collaborators img {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+#collaborators img:hover {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+
 </style>
 </head>
 
@@ -1239,10 +1264,10 @@ html, body {
 
       <!-- Image Card -->
       <div class="polaroid-card">
-        <img src="./assets/FLYER DEC.jpg"
+        <img src="./assets/beacon of the light.jpg"
              class="w-full h-24 rounded-md object-cover cursor-pointer"
-             onclick="openImageModal('./assets/FLYER DEC.jpg')">
-        <h3 class="polaroid-title">Mathematics Workbook</h3>
+             onclick="openImageModal('./assets/beacon of the light.jpg')">
+        <h3 class="polaroid-title">Beacon of The Light</h3>
         <p class="polaroid-text">Problem-based approach for JHS & SHS.</p>
         <button class="polaroid-btn">GHS 40 - Buy</button>
       </div>
@@ -1251,14 +1276,15 @@ html, body {
     <!-- LESSON NOTES -->
     <div id="notesSection" class="tab-section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
       <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition">
-        <img src="./assets/FLYER DEC.jpg"
+        <img src="./assets/lesson note.jpg"
              class="w-full h-24 rounded-md object-cover cursor-pointer"
-             onclick="openImageModal('./assets/FLYER DEC.jpg')">
-        <h3 class="mt-3 font-semibold text-gray-900 text-sm">Lesson Notes (All Subjects)</h3>
+             onclick="openImageModal('./assets/lesson note.jpg')">
+        <h3 class="mt-3 font-semibold text-gray-900 text-sm">Lesson Notes (A Complete Guide For Teachers)</h3>
         <p class="text-xs text-gray-600 mt-1">Clean formatting and editable for teaching.</p>
+        <p class="text-xs text-gray-600 mt-1">Soft Copy Only.</p>
         <div class="flex justify-between items-center mt-3">
-          <span class="text-[#0000FF] font-semibold text-sm">From GHS 20</span>
-          <button class="text-xs bg-[#e63946] text-white px-3 py-1 rounded-md hover:bg-[#c92a36]">Order</button>
+          <span class="text-[#0000FF] font-semibold text-sm"> Check Flyer for Prices</span>
+          <button class="text-xs bg-[#e63946] text-white px-3 py-1 rounded-md hover:bg-[#c92a36]">Buy Now</button>
         </div>
       </div>
     </div>
@@ -1420,6 +1446,32 @@ html, body {
 </section>
 
 
+<!-- ===================== COLLABORATORS SECTION ===================== -->
+<section id="collaborators" class="py-16 bg-[#f8fafc] overflow-hidden">
+  <div class="text-center mb-10">
+    <h5 class="text-2xl md:text-2xl font-bold text-gray-900">
+      Trusted by <span class="text-[#0000FF] italic">Educational Institutions</span> Across Ghana
+    </h5>
+    <p class="mt-2 text-gray-600 text-sm md:text-base">Including key national partners and teacher associations</p>
+  </div>
+
+  <!-- Scrolling logos container -->
+  <div class="relative w-full overflow-hidden">
+    <div class="flex items-center justify-start gap-16 animate-scroll">
+      <img src="/assets/nacca-removebg-preview.png" alt="Collaborator Logos" class="h-16 object-contain opacity-90" />
+      <img src="./assets/Ghana_Education_Service_logo.png" alt="GES" class="h-16 object-contain opacity-90" />
+      <img src="./assets/waec.png" alt="WAEC" class="h-16 object-contain opacity-90" />
+      <img src="./assets/GNAT-logo-1000x600.jpg" alt="GNAT" class="h-16 object-contain opacity-90" />
+      <!-- <img src="https://upload.wikimedia.org/wikipedia/en/3/3c/NAGRAT_logo.png" alt="NAGRAT" class="h-16 object-contain opacity-90" /> -->
+      <!-- <img src="https://upload.wikimedia.org/wikipedia/en/7/7b/CCT_logo.png" alt="CCT" class="h-16 object-contain opacity-90" /> -->
+      <!-- Duplicate logos for infinite loop -->
+       <img src="/assets/nacca-removebg-preview.png" alt="Collaborator Logos" class="h-16 object-contain opacity-90" />
+      <img src="./assets/Ghana_Education_Service_logo.png" alt="GES" class="h-20 object-contain opacity-90" />
+      <img src="./assets/waec.png" alt="WAEC" class="h-16 object-contain opacity-90" />
+      <img src="./assets/GNAT-logo-1000x600.jpg" alt="GNAT" class="h-16 object-contain opacity-90" />
+    </div>
+  </div>
+</section>
 
 
 
