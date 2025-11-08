@@ -990,6 +990,150 @@ html, body {
 }
 
 
+
+/* === FIX: Search result spacing & visibility for all mobile & ultra-small screens === */
+@media (max-width: 768px) {
+  #result {
+    position: relative;
+    display: block;
+    background: #f9fafb;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 12px;
+    font-size: 0.9rem;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 200;
+  }
+
+  .search-card {
+    margin-bottom: 120px !important;
+    overflow: visible !important;
+  }
+
+  #location:focus,
+  #region:focus {
+    scroll-margin-top: 120px;
+  }
+}
+
+/* === Small phones: 480 px & below === */
+@media (max-width: 480px) {
+  #result {
+    margin-top: 10px !important;
+    padding: 8px !important;
+    font-size: 0.85rem !important;
+    max-height: 180px !important;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  }
+
+  .search-card {
+    margin-bottom: 140px !important;
+    padding: 0.9rem !important;
+  }
+
+  #location,
+  #region,
+  #searchBtn {
+    font-size: 0.85rem !important;
+    padding: 0.6rem 0.75rem !important;
+  }
+
+  /* Ensure search results stay visible above following sections */
+  #store, #why {
+    scroll-margin-top: 150px !important;
+  }
+}
+
+/* === Extra-small & ultra-compact screens: 320 px and below (Galaxy S9+, iPhone SE, etc.) === */
+@media (max-width: 320px) {
+  #result {
+    margin-top: 8px !important;
+    padding: 6px !important;
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+    max-height: 160px !important;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
+
+  .search-card {
+    margin-bottom: 160px !important;
+    padding: 0.75rem !important;
+  }
+
+  #location,
+  #region,
+  #searchBtn {
+    font-size: 0.8rem !important;
+    padding: 0.55rem 0.65rem !important;
+  }
+
+  /* Allow the result box to breathe even on smallest screens */
+  #result > div, #result > p, #result > span {
+    word-wrap: break-word !important;
+    line-height: 1.3;
+  }
+
+  /* Smooth scrolling for tiny viewports */
+  html, body {
+    scroll-behavior: smooth !important;
+  }
+}
+
+/* === UNIVERSAL FIX: Make search area scrollable and never hidden === */
+#hero {
+  position: relative;
+  overflow-y: visible !important;
+  overflow-x: hidden !important;
+}
+
+/* The search card itself stays in normal flow */
+.search-card {
+  position: relative !important;
+  overflow: visible !important;
+  margin-bottom: 150px !important; /* ensure space below results */
+}
+
+/* The result box expands and lets the page scroll naturally */
+#result {
+  position: relative !important;
+  display: block !important;
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 12px;
+  font-size: 0.9rem;
+  max-height: none !important;     /* remove height limit */
+  overflow: visible !important;
+  z-index: 999 !important;
+}
+
+/* Allow smooth page scrolling for all devices */
+html, body {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  scroll-behavior: smooth !important;
+}
+
+/* Mobile fine-tune */
+@media (max-width: 768px) {
+  .search-card {
+    margin-bottom: 150px !important;
+  }
+
+  #result {
+    font-size: 0.85rem !important;
+    padding: 8px !important;
+  }
+}
+
+
+
+
 </style>
 </head>
 
