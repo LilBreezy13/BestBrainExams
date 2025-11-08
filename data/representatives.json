@@ -1,0 +1,30 @@
+{
+  "greater accra": [
+    {
+      "name": "Mr. Nicholas Hunsu",
+      "area": "ashaiman",
+      "phone": "0256613433",
+      "latitude": 5.699,
+      "longitude": -0.034,
+      "notes": "Regional representative for Greater Accra schools around Ashaiman."
+    },
+    {
+      "name": "Miss. Emerald Adjetey",
+      "area": "tema",
+      "phone": "0244000111",
+      "latitude": 5.688,
+      "longitude": -0.016,
+      "notes": "Handles Tema, Community 1–12 zones."
+    }
+  ],
+  "eastern": [
+    {
+      "name": "Mr. Nathaniel Adjetey",
+      "area": "Eastern Region A ",
+      "phone": "0544999888",
+      "latitude": 6.092,
+      "longitude": -0.261,
+      "notes": "Covers all of Eastern region."
+    }
+  ]
+}
