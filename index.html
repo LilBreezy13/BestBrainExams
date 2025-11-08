@@ -1173,9 +1173,6 @@ html, body {
   0% { transform: scale(0.92); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
 }
-
-
-
 </style>
 
 
@@ -1587,7 +1584,7 @@ Our exams is of the highest standard and comprehensive enough to meet the tutela
   "
 >
 
-     
+       class="w-full h-[480px] object-cover object-center select-none">
   <div class="absolute bottom-0 left-0 w-full p-5 text-white bg-gradient-to-t from-black/70 to-transparent">
     <h3 class="text-xl font-bold">Founder & CEO</h3>
     <p class="text-sm opacity-90">Bacon Atsu Amengor</p>
@@ -1883,42 +1880,21 @@ document.getElementById('mobileDropdownBtn').onclick = () =>
 const mobileMenu = document.getElementById('mobileMenu');
 document.getElementById('hamburger').onclick = () => mobileMenu.classList.add('show');
 document.getElementById('closeMenu').onclick = () => mobileMenu.classList.remove('show');
-// Load reps dynamically
-async function loadReps() {
-  const snapshot = await getDocs(collection(db, "reps"));
-  let repsByRegion = {};
 
-  snapshot.forEach(doc => {
-    const rep = doc.data();
-    const region = rep.region.toLowerCase();
+/* SEARCH */
+const contacts = {
+  "greater accra": [
+    { name: "John Doe", phone: "0256613433", area: "Ashaiman" },
+    { name: "Mary Mensah", phone: "0267894561", area: "Tema" },
+    { name: "Kwame Tetteh", phone: "0549876543", area: "Katamanso" }
+  ],
+  "ashanti": [
+    { name: "Joseph Owusu", phone: "0541234567", area: "Kumasi" },
+    { name: "Adjoa Serwaa", phone: "0247893214", area: "Obuasi" }
+  ]
+};
 
-    if (!repsByRegion[region]) repsByRegion[region] = [];
-
-    repsByRegion[region].push({
-      name: rep.name,
-      phone: rep.phone,
-      area: rep.area.toLowerCase(),
-      notes: rep.notes || ""
-    });
-  });
-
-  return repsByRegion;
-}
-
-async function loadReps() {
-  try {
-    const response = await fetch('./data/representatives.json');
-    if (!response.ok) throw new Error('Network response was not ok');
-    return await response.json();
-  } catch (err) {
-    console.error('Error loading representatives:', err);
-    document.getElementById('result').textContent =
-      "Failed to load representatives data. Please try again later.";
-    return {};
-  }
-}
-
-document.getElementById('searchBtn').addEventListener('click', async () => {
+document.getElementById('searchBtn').addEventListener('click', () => {
   const loc = document.getElementById('location').value.trim().toLowerCase();
   const region = document.getElementById('region').value.trim().toLowerCase();
   const result = document.getElementById('result');
@@ -1928,83 +1904,26 @@ document.getElementById('searchBtn').addEventListener('click', async () => {
     return;
   }
 
-  result.innerHTML = "Searching…";
-
-  const contacts = await loadReps();
   const reps = contacts[region];
-
-  if (!reps || reps.length === 0) {
-    result.textContent = "No reps found in this region yet.";
+  if (!reps) {
+    result.textContent = "No data for this region yet.";
     return;
   }
 
-  const found = reps.find(rep => loc.includes(rep.area));
+  const found = reps.find(rep => loc.includes(rep.area.toLowerCase()));
   if (found) {
     result.innerHTML = `
       <strong>${found.name}</strong> — ${region.toUpperCase()}<br>
       📞 <a href="tel:${found.phone}" class="text-blue-600">${found.phone}</a> |
-      💬 <a href="https://wa.me/${found.phone.replace(/^0/,'233')}" target="_blank" class="text-green-600">WhatsApp</a>
-      <p class="text-xs text-gray-500 mt-1">${found.notes}</p>
+      💬 <a href="https://wa.me/${found.phone}" target="_blank" class="text-green-600">WhatsApp</a>
     `;
-  } else {    // No direct match → Try nearest rep via GPS
-    result.innerHTML = "Searching for nearest rep... please allow location access.";
-    
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        const userLat = pos.coords.latitude;
-        const userLng = pos.coords.longitude;
-
-        function distance(lat1, lon1, lat2, lon2) {
-          const R = 6371; // Earth radius (km)
-          const toRad = x => x * Math.PI / 180;
-          return R * 2 * Math.atan2(
-            Math.sqrt(
-              Math.sin((toRad(lat2) - toRad(lat1)) / 2)**2 +
-              Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-              Math.sin((toRad(lon2) - toRad(lon1)) / 2)**2
-            ),
-            Math.sqrt(1 - (
-              Math.sin((toRad(lat2) - toRad(lat1)) / 2)**2 +
-              Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-              Math.sin((toRad(lon2) - toRad(lon1)) / 2)**2
-            ))
-          );
-        }
-
-        const closest = reps
-          .filter(r => r.latitude && r.longitude) // only reps with coords
-          .map(r => ({
-            ...r,
-            dist: distance(userLat, userLng, r.latitude, r.longitude)
-          }))
-          .sort((a, b) => a.dist - b.dist)[0];
-
-        if (closest) {
-          result.innerHTML = `
-            <p class="text-sm text-gray-500">No exact match found. Closest available rep is:</p>
-            <div class="mt-3 p-3 border border-blue-200 bg-blue-50 rounded-md">
-              <strong>${closest.name}</strong> — ${region.toUpperCase()}<br>
-              Area: ${closest.area.toUpperCase()} <br>
-              Distance: ~${closest.dist.toFixed(1)} km<br><br>
-              📞 <a href="tel:${closest.phone}" class="text-blue-600">${closest.phone}</a> |
-              💬 <a href="https://wa.me/${closest.phone.replace(/^0/,'233')}" target="_blank" class="text-green-600">WhatsApp</a>
-            </div>
-          `;
-        } else {
-          result.innerHTML = "No location data found for reps in this region.";
-        }
-      }, 
-      () => {
-        result.innerHTML = "Location access denied. Unable to suggest nearby rep.";
-      });
-    } else {
-      result.innerHTML = "Location is not supported on this device.";
-    }
-
+  } else {
+    const list = reps.map(r => `<li>${r.area}: ${r.name} (<a href="tel:${r.phone}" class="text-blue-600">${r.phone}</a>)</li>`).join('');
+    result.innerHTML = `<p>No exact match found. Closest reps:</p><ul class="list-disc ml-5">${list}</ul>`;
   }
 });
 
-// Keep autocomplete function exactly as-is
+/* GOOGLE AUTOCOMPLETE */
 function initAutocomplete() {
   const input = document.getElementById("location");
   new google.maps.places.Autocomplete(input, {
@@ -2012,6 +1931,7 @@ function initAutocomplete() {
     componentRestrictions: { country: "gh" }
   });
 }
+
 
 // POP UP MODAL SCRIPTS 
 
