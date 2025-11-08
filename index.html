@@ -1173,6 +1173,34 @@ html, body {
   0% { transform: scale(0.92); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
 }
+
+
+/* === FIX: Keep Search Result Visible on Mobile === */
+@media (max-width: 767px) {
+  #result {
+    position: relative;
+    display: block;
+    background: #f9fafb;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    max-height: 180px;
+    overflow-y: auto;
+    z-index: 100;
+  }
+
+  /* Make sure parent container doesn't clip it */
+  .search-card {
+    overflow: visible !important;
+  }
+
+  /* Ensure focus scrolls input into view */
+  #location:focus {
+    scroll-margin-top: 100px;
+  }
+}
+
 </style>
 
 
