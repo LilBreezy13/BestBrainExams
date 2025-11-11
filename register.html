@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./Css/bootstrap.min.css">
+  <title>Best Brain - Registration</title>
+  <link rel="icon" type="image/x-icon" href="favicon (1).ico">
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+      background-color: #f3f7f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      width: 90%;
+      max-width: 350px;
+      background-color: #000aba;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      border-radius: 20px;
+      box-sizing: border-box;
+      position: relative;
+      margin: 40px 0;
+    }
+
+    .form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form input,
+    .form select {
+      padding: 11px;
+      margin-bottom: 8px;
+      border-radius: 5px;
+      border: 1px solid #003C96;
+      color: #5b0101;
+      width: 100%;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+      font-size: 80%;
+      font-weight: bold;
+      background-color: white;
+    }
+
+    .form input::placeholder {
+      color: rgba(3, 15, 34, 0.5);
+      font-weight: normal;
+    }
+
+    .login_btn,
+    .cancel_btn {
+      font-size: 18px;
+      color: white;
+      border-radius: 15px;
+      border: none;
+      background: linear-gradient(-90deg, #d31005, #d31005);
+      padding: 12px;
+      margin-top: 12px;
+      width: 100%;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .login_btn:hover {
+      background: linear-gradient(-90deg, #b30b04, #ff1100);
+    }
+
+    #whatsappBtn {
+      background: #25D366;
+    }
+
+    #smsBtn {
+      background: #007AFF;
+    }
+
+    .history-link {
+      margin-top: 12px;
+      text-align: center;
+      width: 100%;
+    }
+
+    .history-link a {
+      color: red;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    #historyPage,
+    #historyDetailPage {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #f9fafc;
+      padding: 20px;
+      box-sizing: border-box;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    #historyInner,
+    #historyDetailInner {
+      max-width: 500px;
+      margin: auto;
+      padding-bottom: 40px;
+    }
+
+    #closeHistory {
+      background: none;
+      border: none;
+      font-size: 16px;
+      font-weight: 600;
+      color: red;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    #historyTitle {
+      text-align: center;
+      font-size: 19px;
+      font-weight: bold;
+      color: #000aba;
+      margin: 0 0 20px;
+    }
+
+    #historyList {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    #historyList li {
+      margin-bottom: 12px;
+      padding: 14px;
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid #e6e9ef;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    #detailBreakdown p {
+      background: #fff;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      border-radius: 10px;
+      border: 1px solid #e6e9ef;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      font-size: 14px;
+    }
+
+    #backHomeBtn {
+      background: linear-gradient(-90deg, #000aba, #000aba);
+      color: white;
+      border: none;
+      border-radius: 15px;
+      padding: 12px;
+      margin-top: 18px;
+      width: 100%;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 17px;
+    }
+
+    #backHomeBtn:hover {
+      background: #04118c;
+      transition: 0.3s;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h4>Calculate School's Enrollments</h4>
+    <div class="form">
+      <input type="text" id="schoolName" placeholder="School Name">
+      <select id="registrationType" onchange="showForm()">
+        <option value="">Exam Types</option>
+        <option value="terminal">Terminal Registration</option>
+      </select>
+
+      <div id="terminalCandidates" style="display:none;">
+        <input type="number" id="nursery" placeholder="Nursery" oninput="validateInput(this)">
+        <input type="number" id="kg1" placeholder="KG 1" oninput="validateInput(this)">
+        <input type="number" id="kg2" placeholder="KG 2" oninput="validateInput(this)">
+        <input type="number" id="basic1" placeholder="Basic 1" oninput="validateInput(this)">
+        <input type="number" id="basic2" placeholder="Basic 2" oninput="validateInput(this)">
+        <input type="number" id="basic3" placeholder="Basic 3" oninput="validateInput(this)">
+        <input type="number" id="basic4" placeholder="Basic 4" oninput="validateInput(this)">
+        <input type="number" id="basic5" placeholder="Basic 5" oninput="validateInput(this)">
+        <input type="number" id="basic6" placeholder="Basic 6" oninput="validateInput(this)">
+        <input type="number" id="basic7" placeholder="Basic 7" oninput="validateInput(this)">
+        <input type="number" id="basic8" placeholder="Basic 8" oninput="validateInput(this)">
+        <input type="number" id="basic9" placeholder="Basic 9" oninput="validateInput(this)">
+      </div>
+
+      <button class="login_btn" onclick="confirmRegistration()">Register</button>
+      <div id="historyLinkBefore" class="history-link">
+        <a onclick="openHistoryPage()">View History?</a>
+      </div>
+    </div>
+
+    <div id="summarySection" style="display:none;">
+      <h4>Summary</h4>
+      <p id="summaryText"></p>
+      <button class="cancel_btn" onclick="resetForm()">Cancel</button>
+      <button id="whatsappBtn" class="login_btn">Send via WhatsApp</button>
+      <button id="smsBtn" class="login_btn">Send via SMS</button>
+      <button id="backHomeBtn" onclick="window.location.href='index.html'">← Back to Home</button>
+
+      <div id="historyLinkAfter" class="history-link" style="display:none;">
+        <a onclick="openHistoryPage()">View History?</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Pages -->
+  <div id="historyPage">
+    <div id="historyInner">
+      <button id="closeHistory" onclick="closeHistoryPage(true)">← Back</button>
+      <h5 id="historyTitle">History</h5>
+      <ul id="historyList"></ul>
+    </div>
+  </div>
+
+  <div id="historyDetailPage">
+    <div id="historyDetailInner">
+      <button onclick="closeHistoryDetail(true)" id="closeDetail" style="background:none;border:none;font-size:16px;font-weight:600;color:red;cursor:pointer;margin-bottom:15px;">← Back</button>
+      <h3 id="detailSchool"></h3>
+      <p id="detailDate" style="color:#666;font-size:13px;"></p>
+      <div id="detailBreakdown"></div>
+    </div>
+  </div>
+
+  <script>
+    const fmt = new Intl.NumberFormat('en-US');
+
+    function validateInput(input) {
+      input.value = input.value.replace(/[^0-9]/g, '');
+    }
+
+    function showForm() {
+      document.getElementById("terminalCandidates").style.display = "block";
+    }
+
+    function confirmRegistration() {
+      let schoolName = document.getElementById("schoolName").value.trim();
+      if (schoolName === "") {
+        alert("Please enter a school name.");
+        return;
+      }
+
+      let inputs = document.querySelectorAll("#terminalCandidates input");
+      let hasValue = false;
+      inputs.forEach(i => { if (i.value) hasValue = true; });
+      if (!hasValue) return alert("Enter at least one class number.");
+
+      let total = 20;
+      let categories = {
+        "Pre-School": (v("nursery") + v("kg1") + v("kg2")) * 8,
+        "Lower Primary": (v("basic1") + v("basic2") + v("basic3")) * 9,
+        "Upper Primary": (v("basic4") + v("basic5") + v("basic6")) * 10,
+        "Basic 7-8": (v("basic7") + v("basic8")) * 15,
+        "Basic 9 - Mock": v("basic9") * 20
+      };
+
+      let summary = "", totalBill = 20;
+      for (let key in categories) {
+        summary += `${key}: GHS ${fmt.format(categories[key])}<br>`;
+        totalBill += categories[key];
+      }
+
+      document.getElementById("summaryText").innerHTML = summary + `<br><b>Total Bill: GHS ${fmt.format(totalBill)}</b>`;
+      document.querySelector(".form").style.display = "none";
+      document.getElementById("summarySection").style.display = "block";
+      document.getElementById("historyLinkBefore").style.display = "none";
+      document.getElementById("historyLinkAfter").style.display = "block";
+
+      let history = JSON.parse(localStorage.getItem("calcHistory")) || [];
+      history.unshift({ school: schoolName, total: totalBill, date: new Date().toLocaleString(), breakdown: categories });
+      localStorage.setItem("calcHistory", JSON.stringify(history));
+
+      let message = encodeURIComponent(`School Name: ${schoolName}\nTotal Bill: GHS ${fmt.format(totalBill)}\nPlease use your school name as payment reference.`);
+      document.getElementById("whatsappBtn").setAttribute("onclick", `sendWhatsApp('${message}')`);
+      document.getElementById("smsBtn").setAttribute("onclick", `sendSMS('${message}')`);
+    }
+
+    function v(id){ return parseInt(document.getElementById(id).value) || 0; }
+    function sendWhatsApp(msg){ window.open(`https://api.whatsapp.com/send?text=${msg}`,'_blank'); }
+    function sendSMS(msg){ window.open(`sms:?body=${msg}`,'_blank'); }
+
+    function resetForm(){
+      document.querySelector(".form").style.display = "flex";
+      document.getElementById("summarySection").style.display = "none";
+      document.querySelectorAll("#terminalCandidates input").forEach(i=>i.value="");
+      document.getElementById("registrationType").value="";
+      document.getElementById("terminalCandidates").style.display="none";
+      document.getElementById("historyLinkBefore").style.display="block";
+      document.getElementById("historyLinkAfter").style.display="none";
+    }
+
+    function openHistoryPage(){
+      let h=JSON.parse(localStorage.getItem("calcHistory"))||[];
+      let list=document.getElementById("historyList");
+      list.innerHTML=h.length? "":"<li>No history found.</li>";
+      h.forEach((i,n)=>{
+        let li=document.createElement("li");
+        li.innerHTML=`<b>${i.school}</b> Total: GHS ${fmt.format(i.total)}<br><small>${i.date}</small><br><button onclick="viewHistory(${n})" style="margin-top:6px;padding:6px 10px;background:#000aba;color:white;border:none;border-radius:8px;cursor:pointer;">View</button>`;
+        list.appendChild(li);
+      });
+      document.querySelector(".card").style.display="none";
+      document.getElementById("historyPage").style.display="block";
+    }
+
+    function closeHistoryPage(){document.querySelector(".card").style.display="flex";document.getElementById("historyPage").style.display="none";}
+    function viewHistory(i){
+      let h=JSON.parse(localStorage.getItem("calcHistory"))||[];
+      let item=h[i]; let html="";
+      for(let k in item.breakdown){ if(item.breakdown[k]>0) html+=`<p><b>${k}</b>: GHS ${fmt.format(item.breakdown[k])}</p>`; }
+      html+=`<p><b>Delivery Fee</b>: GHS 20</p><p><b>Total Bill</b>: GHS ${fmt.format(item.total)}</p>`;
+      document.getElementById("detailSchool").innerText=item.school;
+      document.getElementById("detailDate").innerText=item.date;
+      document.getElementById("detailBreakdown").innerHTML=html;
+      document.getElementById("historyPage").style.display="none";
+      document.getElementById("historyDetailPage").style.display="block";
+    }
+    function closeHistoryDetail(){document.getElementById("historyDetailPage").style.display="none";document.getElementById("historyPage").style.display="block";}
+  </script>
+</body>
+</html>

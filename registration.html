@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./Css/bootstrap.min.css">
+    <link rel="stylesheet" href="./registration.css">
+    <title>Best Brain</title>
+    <link rel="icon" type="image/x-icon" href="favicon (1).ico">
+     <link rel="icon" href="/favicon (1).ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/favicon (1).ico" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            background-color: #f3f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            width: 90%;
+            max-width: 350px;
+            background-color: #000aba;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            border-radius: 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form input, .form select {
+            padding: 11px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            border: 1px solid #003C96;
+            color: #5b0101;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            font-size: 80%;
+            font-weight: bold;
+            background-color: white;
+        }
+
+        .form input::placeholder {
+            color: rgba(3, 15, 34, 0.5);
+            font-weight: normal;
+        }
+
+        .form input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .form input[type="number"]::-webkit-inner-spin-button, 
+        .form input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .form input[type="number"] {
+            appearance: textfield;
+            -webkit-appearance: none;
+            -moz-appearance: textfield;
+        }
+
+        .login_btn, .confirm_btn, .cancel_btn {
+            font-size: 20px;
+            color: white;
+            border-radius: 15px;
+            border: none;
+            background: linear-gradient(-90deg, #d31005, #d31005);
+            padding: 12px;
+            margin-top: 15px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .registration-form {
+            display: none;
+        }
+
+        .class-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .class-inputs input {
+            padding: 10px;
+            margin-bottom: 5px;
+            font-size: 80%;
+            font-weight: normal;
+        }
+
+        .login_btn:hover {
+    background: linear-gradient(-90deg, #b30b04, #ff1100);
+    transition: 0.3s;
+}
+
+#whatsappBtn {
+    background: #25D366; /* WhatsApp Green */
+}
+
+#smsBtn {
+    background: #007AFF; /* iOS Blue */
+}
+
+#whatsappBtn, #smsBtn {
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    padding: 12px;
+    cursor: pointer;
+    color: white;
+}
+
+
+/* Center the "Last 5 History" link */
+.history-link {
+    margin-top: 12px;
+    text-align: center;
+    width: 100%;
+}
+.history-link a {
+    color: red;
+    font-weight: 600;
+    text-decoration: none; /* no underline */
+    cursor: pointer;
+}
+
+
+/* Full Page History */
+#historyPage {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #f9fafc;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 1000;
+    overflow-y: auto; /* allow scroll on mobile */
+}
+
+#historyInner {
+    max-width: 500px;
+    margin: auto;
+    padding-bottom: 40px;
+}
+
+#closeHistory {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: red;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+#historyTitle {
+    text-align: center;
+    font-size: 19px;
+    font-weight: bold;
+    color: #000aba;
+    margin: 0 0 20px;
+}
+
+#historyList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#historyList li {
+    margin-bottom: 12px;
+    padding: 14px;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e6e9ef;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+#historyList li b {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: #031f5c;
+}
+
+#historyList li small {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #666;
+}
+
+
+/* History detail full page */
+#historyDetailPage {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #f9fafc;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 2000;
+    overflow-y: auto;
+}
+
+#historyDetailInner {
+    max-width: 500px;
+    margin: auto;
+    padding-bottom: 40px;
+}
+
+#detailBreakdown {
+    margin-top: 15px;
+}
+#detailBreakdown p {
+    background: #fff;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    border: 1px solid #e6e9ef;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    font-size: 14px;
+}
+#detailBreakdown b {
+    color: #031f5c;
+}
+
+
+
+
+
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h4>Calculate School's Enrollments</h4>
+        <div class="form">
+            <input type="text" id="schoolName" placeholder="School Name">
+            <select id="registrationType" onchange="showForm()">
+                <option value="">Exam Types</option>
+                <option value="terminal">Terminal Registration</option>
+            </select>
+            <div id="terminalCandidates" style="display:none;">
+                <input type="number" id="nursery" placeholder="Nursery" inputmode="numeric" oninput="validateInput(this)">
+                <input type="number" id="kg1" placeholder="KG 1" inputmode="numeric" oninput="validateInput(this)">
+                <input type="number" id="kg2" placeholder="KG 2" inputmode="numeric" oninput="validateInput(this)">
+                <input type="number" id="basic1" placeholder="Basic 1" inputmode="numeric" oninput="validateInput(this)">
+                <input type="number" id="basic2" placeholder="Basic 2" inputmode="numeric" oninput="validateInput(this)">
+                <input type="number" id="basic3" placeholder="Basic 3" inputmode="numeric" oninput="validateInput(this)">
+                <input type="number" id="basic4" placeholder="Basic 4" inputmode="numeric" oninput="validateInput(this)">
+                <input type="number" id="basic5" placeholder="Basic 5" inputmode="numeric" oninput="validateInput(this)">
+                <input type="number" id="basic6" placeholder="Basic 6" inputmode="numeric" oninput="validateInput(this)">
+                <input type="number" id="basic7" placeholder="Basic 7" inputmode="numeric" oninput="validateInput(this)">
+                <input type="number" id="basic8" placeholder="Basic 8" inputmode="numeric" oninput="validateInput(this)">
+                <input type="number" id="basic9" placeholder="Basic 9" inputmode="numeric" oninput="validateInput(this)">
+            </div>
+            <button class="login_btn" onclick="confirmRegistration()">Register</button>
+          
+
+ <div id="historyLinkBefore" class="history-link">
+  <a onclick="openHistoryPage()">View History?</a>
+</div>
+
+
+        </div>
+        <div id="summarySection" style="display:none;">
+            <h4>Summary</h4>
+            <p id="summaryText"></p>
+            <button class="cancel_btn" onclick="resetForm()">Cancel</button>
+            <button id="whatsappBtn" class="login_btn">Send via WhatsApp</button>
+            <button id="smsBtn" class="login_btn">Send via SMS</button>
+           
+         <div id="historyLinkAfter" class="history-link" style="display:none;">
+  <a onclick="openHistoryPage()">View History? </a>
+</div>
+
+         
+        </div>
+        
+    </div>
+
+
+
+<!-- History Full Page -->
+<div id="historyPage" style="display:none;">
+  <div id="historyInner">
+  <button id="closeHistory" onclick="closeHistoryPage(true)" aria-label="Close">&larr; Back</button>
+
+    <h5 id="historyTitle">History</h5>
+    <ul id="historyList"></ul>
+  </div>
+</div>
+
+<!-- Single History Detail Page -->
+<div id="historyDetailPage" style="display:none;">
+  <div id="historyDetailInner">
+   <button onclick="closeHistoryDetail()" style="background:none; border:none; font-size:16px; font-weight:600; color:red; cursor:pointer; margin-bottom:15px;">&larr; Back</button>
+    <h3 id="detailSchool"></h3>
+    <p id="detailDate" style="color:#666; font-size:13px;"></p>
+    <div id="detailBreakdown"></div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+    <script>
+
+function viewHistory(index) {
+    let history = JSON.parse(localStorage.getItem("calcHistory")) || [];
+    let item = history[index];
+
+    document.getElementById("detailSchool").innerText = item.school;
+    document.getElementById("detailDate").innerText = item.date;
+
+    let breakdownHTML = "";
+
+    // Only show categories with non-zero values
+    for (let key in item.breakdown) {
+        if (item.breakdown[key] > 0) {
+            breakdownHTML += `<p><b>${key}</b>: GHS ${fmt.format(item.breakdown[key])}</p>`;
+        }
+    }
+
+    // Delivery Fee is always shown
+    breakdownHTML += `<p><b>Delivery Fee</b>: GHS ${fmt.format(20)}</p>`;
+    breakdownHTML += `<p><b>Total Bill</b>: GHS ${fmt.format(item.total)}</p>`;
+
+    document.getElementById("detailBreakdown").innerHTML = breakdownHTML;
+
+    // Switch to detail page
+    document.getElementById("historyPage").style.display = "none";
+    document.getElementById("historyDetailPage").style.display = "block";
+}
+
+
+
+function closeHistoryDetail() {
+    document.getElementById("historyDetailPage").style.display = "none";
+    document.getElementById("historyPage").style.display = "block";
+}
+
+
+    function validateInput(input) {
+        input.value = input.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+    }
+
+    function showForm() {
+        document.getElementById("terminalCandidates").style.display = "block";
+    }
+
+    // Formatter for commas (1,000, 12,345, etc.)
+    const fmt = new Intl.NumberFormat('en-US');
+
+    function confirmRegistration() {
+        let inputs = document.querySelectorAll("#terminalCandidates input");
+        let hasValue = false;
+        let total = 20; // delivery fee included
+        let summary = "";
+
+        inputs.forEach(input => {
+            let value = parseInt(input.value) || 0;
+            if (value > 0) hasValue = true;
+        });
+
+        if (!hasValue) {
+            alert("Please enter at least one numeric value.");
+            return;
+        }
+
+        let schoolName = document.getElementById("schoolName").value.trim();
+        if (schoolName === "") {
+            alert("Please enter a school name.");
+            return;
+        }
+
+        let categories = {
+            "Pre-School": (parseInt(document.getElementById("nursery").value) || 0) * 8 +
+                          (parseInt(document.getElementById("kg1").value) || 0) * 8 +
+                          (parseInt(document.getElementById("kg2").value) || 0) * 8,
+
+            "Lower Primary": (parseInt(document.getElementById("basic1").value) || 0) * 9 +
+                             (parseInt(document.getElementById("basic2").value) || 0) * 9 +
+                             (parseInt(document.getElementById("basic3").value) || 0) * 9,
+
+            "Upper Primary": (parseInt(document.getElementById("basic4").value) || 0) * 10 +
+                             (parseInt(document.getElementById("basic5").value) || 0) * 10 +
+                             (parseInt(document.getElementById("basic6").value) || 0) * 10,
+
+            "Basic 7-8": (parseInt(document.getElementById("basic7").value) || 0) * 15 +
+                         (parseInt(document.getElementById("basic8").value) || 0) * 15,
+
+            "Basic 9 - Mock": (parseInt(document.getElementById("basic9").value) || 0) * 20
+        };
+
+        for (let key in categories) {
+            summary += `${key}: GHS ${fmt.format(categories[key])} <br>`;
+            total += categories[key];
+        }
+
+        summary += `Delivery Fee: GHS ${fmt.format(20)} <br>`;
+
+        let finalMessage = `School Name: ${schoolName}\n\n`;
+        for (let key in categories) {
+            finalMessage += `${key}: GHS ${fmt.format(categories[key])} \n`;
+        }
+        finalMessage += `Delivery Fee: GHS ${fmt.format(20)} \n`;
+        finalMessage += `\nTotal Bill: GHS ${fmt.format(total)}
+\nKindly pay through any of the momo lines
+0247448883(Bacon Atsu Amengor)
+0248726958(Best Brain Examinations Konsortium) 
+\nNB: Please use the name of your school as reference when making payments and send us a screenshot for confirmation.` ;
+
+        // Update summary on page
+        document.getElementById("summaryText").innerHTML = summary + `<br><b>Total Bill: GHS ${fmt.format(total)}</b>`;
+        document.getElementById("summarySection").style.display = "block";
+
+        // Hide history link on form page, show the one in summary
+document.getElementById("historyLinkBefore").style.display = "none";
+document.getElementById("historyLinkAfter").style.display = "block";
+
+
+      // Save history (unlimited, but handle storage full case)
+let history = JSON.parse(localStorage.getItem("calcHistory")) || [];
+history.unshift({
+    school: schoolName,
+    total: total,
+    date: new Date().toLocaleString(),
+    breakdown: categories // store category details
+});
+
+try {
+    localStorage.setItem("calcHistory", JSON.stringify(history));
+} catch (e) {
+    if (e.name === "QuotaExceededError") {
+        // If storage is full, drop the oldest entry and try again
+        history.pop();
+        localStorage.setItem("calcHistory", JSON.stringify(history));
+    }
+}
+
+
+        // Set sharing
+        document.getElementById("whatsappBtn").setAttribute("onclick", `sendWhatsApp('${encodeURIComponent(finalMessage)}')`);
+        document.getElementById("smsBtn").setAttribute("onclick", `sendSMS('${encodeURIComponent(finalMessage)}')`);
+    }
+
+    // WhatsApp
+    function sendWhatsApp(message) {
+        let whatsappURL = `https://api.whatsapp.com/send?text=${message}`;
+        window.open(whatsappURL, '_blank');
+    }
+
+    // SMS
+    function sendSMS(message) {
+        let smsURL = `sms:?body=${message}`;
+        window.open(smsURL, '_blank');
+    }
+
+    // History overlay
+ function openHistoryPage() {
+    let history = JSON.parse(localStorage.getItem("calcHistory")) || [];
+    let list = document.getElementById("historyList");
+    list.innerHTML = "";
+
+    if (history.length === 0) {
+        list.innerHTML = "<li>No history found.</li>";
+    } else {
+        history.forEach((item, index) => {
+            let li = document.createElement("li");
+            li.innerHTML = `<b>${item.school}</b>
+                            Total Bill: GHS ${fmt.format(item.total)}<br>
+                            <small>${item.date}</small><br>
+                            <button onclick="viewHistory(${index})" style="margin-top:6px; padding:6px 10px; background:#000aba; color:white; border:none; border-radius:8px; cursor:pointer;">View</button>`;
+            list.appendChild(li);
+        });
+    }
+
+        document.getElementById("historyPage").style.display = "block";
+    }
+
+
+
+
+    function closeHistoryPage() {
+        document.getElementById("historyPage").style.display = "none";
+    }
+
+ function resetForm() {
+    // Clear inputs
+    document.getElementById("schoolName").value = "";
+    let inputs = document.querySelectorAll("#terminalCandidates input");
+    inputs.forEach(input => input.value = "");
+
+    // Reset exam type dropdown back to default
+    document.getElementById("registrationType").value = "";
+
+    // Hide summary, show form again
+    document.getElementById("summarySection").style.display = "none";
+    document.querySelector(".form").style.display = "flex";
+
+    // Reset history link states
+    document.getElementById("historyLinkBefore").style.display = "block";
+    document.getElementById("historyLinkAfter").style.display = "none";
+
+    // Hide candidates input section until exam type is picked again
+    document.getElementById("terminalCandidates").style.display = "none";
+}
+
+
+// Handle navigation history for mobile back button
+window.onpopstate = function(event) {
+    if (document.getElementById("historyDetailPage").style.display === "block") {
+        // On detail page → go back to history list
+        closeHistoryDetail(false);
+    } else if (document.getElementById("historyPage").style.display === "block") {
+        // On history page → go back to main card
+        closeHistoryPage(false);
+    } else {
+        // Already on main form/summary → allow normal back (exit app/close tab)
+        history.go(-1);
+    }
+};
+
+// Push custom states only for history and detail
+function openHistoryPage() {
+    let historyData = JSON.parse(localStorage.getItem("calcHistory")) || [];
+    let list = document.getElementById("historyList");
+    list.innerHTML = "";
+
+    if (historyData.length === 0) {
+        list.innerHTML = "<li>No history found.</li>";
+    } else {
+        historyData.forEach((item, index) => {
+            let li = document.createElement("li");
+            li.innerHTML = `<b>${item.school}</b>
+                            Total Bill: GHS ${fmt.format(item.total)}<br>
+                            <small>${item.date}</small><br>
+                            <button onclick="viewHistory(${index})" style="margin-top:6px; padding:6px 10px; background:#000aba; color:white; border:none; border-radius:8px; cursor:pointer;">View</button>`;
+            list.appendChild(li);
+        });
+    }
+
+    document.querySelector(".card").style.display = "none";
+    document.getElementById("historyPage").style.display = "block";
+
+    history.pushState({ page: "history" }, "", "");
+}
+
+function closeHistoryPage(fromButton = true) {
+    document.querySelector(".card").style.display = "flex";
+    document.getElementById("historyPage").style.display = "none";
+
+    if (fromButton) {
+        // User tapped app Back → do not touch browser history
+        return;
+    }
+}
+function viewHistory(index) {
+    let historyData = JSON.parse(localStorage.getItem("calcHistory")) || [];
+    let item = historyData[index];
+
+    document.getElementById("detailSchool").innerText = item.school;
+    document.getElementById("detailDate").innerText = item.date;
+
+    let breakdownHTML = "";
+    for (let key in item.breakdown) {
+        if (item.breakdown[key] > 0) {
+            breakdownHTML += `<p><b>${key}</b>: GHS ${fmt.format(item.breakdown[key])}</p>`;
+        }
+    }
+    breakdownHTML += `<p><b>Delivery Fee</b>: GHS ${fmt.format(20)}</p>`;
+    breakdownHTML += `<p><b>Total Bill</b>: GHS ${fmt.format(item.total)}</p>`;
+
+    document.getElementById("detailBreakdown").innerHTML = breakdownHTML;
+
+    document.getElementById("historyPage").style.display = "none";
+    document.getElementById("historyDetailPage").style.display = "block";
+
+    history.pushState({ page: "detail" }, "", "");
+}
+
+function closeHistoryDetail(fromButton = true) {
+    document.getElementById("historyDetailPage").style.display = "none";
+    document.getElementById("historyPage").style.display = "block";
+
+    if (fromButton) {
+        // User tapped app Back → do not touch browser history
+        return;
+    }
+}
+
+
+
+    </script>
+</body>
+</html>
