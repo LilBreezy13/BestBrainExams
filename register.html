@@ -59,11 +59,6 @@
       background-color: white;
     }
 
-    .form input::placeholder {
-      color: rgba(3, 15, 34, 0.5);
-      font-weight: normal;
-    }
-
     .login_btn,
     .cancel_btn {
       font-size: 18px;
@@ -91,99 +86,6 @@
     #smsBtn {
       background: #007AFF;
     }
-
-    .history-link {
-      margin-top: 12px;
-      text-align: center;
-      width: 100%;
-    }
-
-    .history-link a {
-      color: red;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    #historyPage,
-    #historyDetailPage {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: #f9fafc;
-      padding: 20px;
-      box-sizing: border-box;
-      z-index: 1000;
-      overflow-y: auto;
-    }
-
-    #historyInner,
-    #historyDetailInner {
-      max-width: 500px;
-      margin: auto;
-      padding-bottom: 40px;
-    }
-
-    #closeHistory {
-      background: none;
-      border: none;
-      font-size: 16px;
-      font-weight: 600;
-      color: red;
-      cursor: pointer;
-      margin-bottom: 20px;
-    }
-
-    #historyTitle {
-      text-align: center;
-      font-size: 19px;
-      font-weight: bold;
-      color: #000aba;
-      margin: 0 0 20px;
-    }
-
-    #historyList {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    #historyList li {
-      margin-bottom: 12px;
-      padding: 14px;
-      background: #ffffff;
-      border-radius: 12px;
-      border: 1px solid #e6e9ef;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-
-    #detailBreakdown p {
-      background: #fff;
-      padding: 10px 12px;
-      margin-bottom: 8px;
-      border-radius: 10px;
-      border: 1px solid #e6e9ef;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      font-size: 14px;
-    }
-
-    #backHomeBtn {
-      background: linear-gradient(-90deg, #000aba, #000aba);
-      color: white;
-      border: none;
-      border-radius: 15px;
-      padding: 12px;
-      margin-top: 18px;
-      width: 100%;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 17px;
-    }
-
-    #backHomeBtn:hover {
-      background: #04118c;
-      transition: 0.3s;
-    }
   </style>
 </head>
 
@@ -191,10 +93,32 @@
   <div class="card">
     <h4>Calculate School's Enrollments</h4>
     <div class="form">
-      <input type="text" id="schoolName" placeholder="School Name">
+      <input type="text" id="schoolName" placeholder="School Name" required>
+      <input type="text" id="contact" placeholder="Contact" required>
+      <input type="text" id="location" placeholder="Location" required>
+
       <select id="registrationType" onchange="showForm()">
-        <option value="">Exam Types</option>
-        <option value="terminal">Terminal Registration</option>
+        <option value="">Select Exam Type</option>
+        <option value="terminal">Terminal</option>
+        <option value="mock">Mock</option>
+      </select>
+
+      <!-- Ghanaian Language -->
+      <select id="ghanaLang" style="display:none;">
+        <option value="">Select Ghanaian Language</option>
+        <option value="Akan (Twi/Fante)">Akan (Twi/Fante)</option>
+        <option value="Ewe">Ewe</option>
+        <option value="Ga">Ga</option>
+        <option value="Dagbani">Dagbani</option>
+        <option value="Gonja">Gonja</option>
+        <option value="Nzema">Nzema</option>
+      </select>
+
+      <!-- French Option -->
+      <select id="french" style="display:none;">
+        <option value="">French Offered?</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
       </select>
 
       <div id="terminalCandidates" style="display:none;">
@@ -213,9 +137,6 @@
       </div>
 
       <button class="login_btn" onclick="confirmRegistration()">Register</button>
-      <div id="historyLinkBefore" class="history-link">
-        <a onclick="openHistoryPage()">View History?</a>
-      </div>
     </div>
 
     <div id="summarySection" style="display:none;">
@@ -224,125 +145,126 @@
       <button class="cancel_btn" onclick="resetForm()">Cancel</button>
       <button id="whatsappBtn" class="login_btn">Send via WhatsApp</button>
       <button id="smsBtn" class="login_btn">Send via SMS</button>
-      <button id="backHomeBtn" onclick="window.location.href='index.html'">← Back to Home</button>
-
-      <div id="historyLinkAfter" class="history-link" style="display:none;">
-        <a onclick="openHistoryPage()">View History?</a>
-      </div>
     </div>
   </div>
 
-  <!-- History Pages -->
-  <div id="historyPage">
-    <div id="historyInner">
-      <button id="closeHistory" onclick="closeHistoryPage(true)">← Back</button>
-      <h5 id="historyTitle">History</h5>
-      <ul id="historyList"></ul>
-    </div>
-  </div>
+<script>
+const fmt = new Intl.NumberFormat('en-US');
 
-  <div id="historyDetailPage">
-    <div id="historyDetailInner">
-      <button onclick="closeHistoryDetail(true)" id="closeDetail" style="background:none;border:none;font-size:16px;font-weight:600;color:red;cursor:pointer;margin-bottom:15px;">← Back</button>
-      <h3 id="detailSchool"></h3>
-      <p id="detailDate" style="color:#666;font-size:13px;"></p>
-      <div id="detailBreakdown"></div>
-    </div>
-  </div>
+function validateInput(input) {
+  input.value = input.value.replace(/[^0-9]/g, '');
+}
 
-  <script>
-    const fmt = new Intl.NumberFormat('en-US');
+function showForm() {
+  let type = document.getElementById("registrationType").value;
+  let container = document.getElementById("terminalCandidates");
+  let inputs = document.querySelectorAll("#terminalCandidates input");
 
-    function validateInput(input) {
-      input.value = input.value.replace(/[^0-9]/g, '');
-    }
+  // Reset fields
+  inputs.forEach(i => {
+    i.value = "";
+    i.disabled = false;
+    i.style.display = "block";
+    i.style.background = "white";
+  });
 
-    function showForm() {
-      document.getElementById("terminalCandidates").style.display = "block";
-    }
+  // show language & french always after selecting exam
+  document.getElementById("ghanaLang").style.display = (type ? "block" : "none");
+  document.getElementById("french").style.display = (type ? "block" : "none");
 
-    function confirmRegistration() {
-      let schoolName = document.getElementById("schoolName").value.trim();
-      if (schoolName === "") {
-        alert("Please enter a school name.");
-        return;
-      }
+  if (type === "terminal") {
+    container.style.display = "block";
+    inputs.forEach(i => i.disabled = false);
+  } 
+  else if (type === "mock") {
+    container.style.display = "block";
+    inputs.forEach(i => i.style.display = "none");
+    let b9 = document.getElementById("basic9");
+    b9.style.display = "block";
+    b9.disabled = false;
+  } 
+  else {
+    container.style.display = "none";
+  }
+}
 
-      let inputs = document.querySelectorAll("#terminalCandidates input");
-      let hasValue = false;
-      inputs.forEach(i => { if (i.value) hasValue = true; });
-      if (!hasValue) return alert("Enter at least one class number.");
+function confirmRegistration() {
+  let schoolName = document.getElementById("schoolName").value.trim();
+  let contact = document.getElementById("contact").value.trim();
+  let location = document.getElementById("location").value.trim();
+  let type = document.getElementById("registrationType").value;
+  let lang = document.getElementById("ghanaLang").value;
+  let french = document.getElementById("french").value;
 
-      let total = 20;
-      let categories = {
-        "Pre-School": (v("nursery") + v("kg1") + v("kg2")) * 8,
-        "Lower Primary": (v("basic1") + v("basic2") + v("basic3")) * 9,
-        "Upper Primary": (v("basic4") + v("basic5") + v("basic6")) * 10,
-        "Basic 7-8": (v("basic7") + v("basic8")) * 15,
-        "Basic 9 - Mock": v("basic9") * 20
-      };
+  if (!contact || !location) return alert("Contact & Location are required.");
+  if (!type) return alert("Select exam type.");
+  if (!lang) return alert("Select Ghanaian language.");
+  if (!french) return alert("Select French option.");
 
-      let summary = "", totalBill = 20;
-      for (let key in categories) {
-        summary += `${key}: GHS ${fmt.format(categories[key])}<br>`;
-        totalBill += categories[key];
-      }
+  let categories;
 
-      document.getElementById("summaryText").innerHTML = summary + `<br><b>Total Bill: GHS ${fmt.format(totalBill)}</b>`;
-      document.querySelector(".form").style.display = "none";
-      document.getElementById("summarySection").style.display = "block";
-      document.getElementById("historyLinkBefore").style.display = "none";
-      document.getElementById("historyLinkAfter").style.display = "block";
+  if (type === "terminal") {
+    let inputs = document.querySelectorAll("#terminalCandidates input");
+    for (let i of inputs) if (i.value === "") return alert("Fill every class field.");
 
-      let history = JSON.parse(localStorage.getItem("calcHistory")) || [];
-      history.unshift({ school: schoolName, total: totalBill, date: new Date().toLocaleString(), breakdown: categories });
-      localStorage.setItem("calcHistory", JSON.stringify(history));
+    categories = {
+      "Pre-School": (v("nursery") + v("kg1") + v("kg2")) * 8,
+      "Lower Primary": (v("basic1") + v("basic2") + v("basic3")) * 9,
+      "Upper Primary": (v("basic4") + v("basic5") + v("basic6")) * 10,
+      "Basic 7-8": (v("basic7") + v("basic8")) * 15,
+      "Basic 9": v("basic9") * 12
+    };
+  } 
+  else {
+    if (v("basic9") === 0 && document.getElementById("basic9").value === "") 
+      return alert("Enter Basic 9 enrollment.");
+    categories = { "Mock (Basic 9 Only)": v("basic9") * 20 };
+  }
 
-      let message = encodeURIComponent(`School Name: ${schoolName}\nTotal Bill: GHS ${fmt.format(totalBill)}\nPlease use your school name as payment reference.`);
-      document.getElementById("whatsappBtn").setAttribute("onclick", `sendWhatsApp('${message}')`);
-      document.getElementById("smsBtn").setAttribute("onclick", `sendSMS('${message}')`);
-    }
+  let summary = `<b>Exam Type:</b> ${type.toUpperCase()} <br>
+                 <b>Language:</b> ${lang} <br>
+                 <b>French:</b> ${french} <br><br>`;
 
-    function v(id){ return parseInt(document.getElementById(id).value) || 0; }
-    function sendWhatsApp(msg){ window.open(`https://api.whatsapp.com/send?text=${msg}`,'_blank'); }
-    function sendSMS(msg){ window.open(`sms:?body=${msg}`,'_blank'); }
+  let totalBill = 20;
+  for (let key in categories) {
+    summary += `${key}: GHS ${fmt.format(categories[key])}<br>`;
+    totalBill += categories[key];
+  }
 
-    function resetForm(){
-      document.querySelector(".form").style.display = "flex";
-      document.getElementById("summarySection").style.display = "none";
-      document.querySelectorAll("#terminalCandidates input").forEach(i=>i.value="");
-      document.getElementById("registrationType").value="";
-      document.getElementById("terminalCandidates").style.display="none";
-      document.getElementById("historyLinkBefore").style.display="block";
-      document.getElementById("historyLinkAfter").style.display="none";
-    }
+  document.getElementById("summaryText").innerHTML = 
+      summary + `<br><b>Total Bill: GHS ${fmt.format(totalBill)}</b>`;
 
-    function openHistoryPage(){
-      let h=JSON.parse(localStorage.getItem("calcHistory"))||[];
-      let list=document.getElementById("historyList");
-      list.innerHTML=h.length? "":"<li>No history found.</li>";
-      h.forEach((i,n)=>{
-        let li=document.createElement("li");
-        li.innerHTML=`<b>${i.school}</b> Total: GHS ${fmt.format(i.total)}<br><small>${i.date}</small><br><button onclick="viewHistory(${n})" style="margin-top:6px;padding:6px 10px;background:#000aba;color:white;border:none;border-radius:8px;cursor:pointer;">View</button>`;
-        list.appendChild(li);
-      });
-      document.querySelector(".card").style.display="none";
-      document.getElementById("historyPage").style.display="block";
-    }
+  document.querySelector(".form").style.display = "none";
+  document.getElementById("summarySection").style.display = "block";
 
-    function closeHistoryPage(){document.querySelector(".card").style.display="flex";document.getElementById("historyPage").style.display="none";}
-    function viewHistory(i){
-      let h=JSON.parse(localStorage.getItem("calcHistory"))||[];
-      let item=h[i]; let html="";
-      for(let k in item.breakdown){ if(item.breakdown[k]>0) html+=`<p><b>${k}</b>: GHS ${fmt.format(item.breakdown[k])}</p>`; }
-      html+=`<p><b>Delivery Fee</b>: GHS 20</p><p><b>Total Bill</b>: GHS ${fmt.format(item.total)}</p>`;
-      document.getElementById("detailSchool").innerText=item.school;
-      document.getElementById("detailDate").innerText=item.date;
-      document.getElementById("detailBreakdown").innerHTML=html;
-      document.getElementById("historyPage").style.display="none";
-      document.getElementById("historyDetailPage").style.display="block";
-    }
-    function closeHistoryDetail(){document.getElementById("historyDetailPage").style.display="none";document.getElementById("historyPage").style.display="block";}
-  </script>
+  let msg = encodeURIComponent(
+    `School Name: ${schoolName || "N/A"}
+Contact: ${contact}
+Location: ${location}
+Exam Type: ${type.toUpperCase()}
+Language: ${lang}
+French: ${french}
+Total Bill: GHS ${fmt.format(totalBill)}
+Use school name as reference.`
+  );
+
+  document.getElementById("whatsappBtn").onclick = () => window.open(`https://api.whatsapp.com/send?text=${msg}`);
+  document.getElementById("smsBtn").onclick = () => window.open(`sms:?body=${msg}`);
+}
+
+function resetForm() {
+  document.querySelector(".form").style.display = "flex";
+  document.getElementById("summarySection").style.display = "none";
+  document.querySelectorAll("input").forEach(i => i.value = "");
+  document.querySelectorAll("select").forEach(s => s.value = "");
+  document.getElementById("terminalCandidates").style.display = "none";
+  document.getElementById("ghanaLang").style.display = "none";
+  document.getElementById("french").style.display = "none";
+}
+
+function v(id) {
+  return parseInt(document.getElementById(id).value) || 0;
+}
+</script>
 </body>
 </html>
