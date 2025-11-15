@@ -8,6 +8,7 @@
   <link rel="icon" type="image/x-icon" href="favicon (1).ico">
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 
@@ -33,8 +34,6 @@
       justify-content: center;
       padding: 40px;
       border-radius: 20px;
-      box-sizing: border-box;
-      position: relative;
       margin: 40px 0;
     }
 
@@ -52,7 +51,6 @@
       border: 1px solid #003C96;
       color: #5b0101;
       width: 100%;
-      box-sizing: border-box;
       font-family: "Poppins", sans-serif;
       font-size: 80%;
       font-weight: bold;
@@ -65,18 +63,13 @@
       color: white;
       border-radius: 15px;
       border: none;
-      background: linear-gradient(-90deg, #d31005, #d31005);
+      background: #d31005;
       padding: 12px;
       margin-top: 12px;
       width: 100%;
       cursor: pointer;
       font-weight: bold;
       text-align: center;
-      transition: 0.3s;
-    }
-
-    .login_btn:hover {
-      background: linear-gradient(-90deg, #b30b04, #ff1100);
     }
 
     #whatsappBtn {
@@ -92,9 +85,11 @@
 <body>
   <div class="card">
     <h4>Calculate School's Enrollments</h4>
+
+    <!-- FORM -->
     <div class="form">
       <input type="text" id="schoolName" placeholder="School Name" required>
-      <input type="text" id="contact" placeholder="Contact" required>
+      <input type="text" id="contact" inputmode="numeric" placeholder="Contact" required>
       <input type="text" id="location" placeholder="Location" required>
 
       <select id="registrationType" onchange="showForm()">
@@ -103,7 +98,6 @@
         <option value="mock">Mock</option>
       </select>
 
-      <!-- Ghanaian Language -->
       <select id="ghanaLang" style="display:none;">
         <option value="">Select Ghanaian Language</option>
         <option value="Akan (Twi/Fante)">Akan (Twi/Fante)</option>
@@ -114,7 +108,6 @@
         <option value="Nzema">Nzema</option>
       </select>
 
-      <!-- French Option -->
       <select id="french" style="display:none;">
         <option value="">French Offered?</option>
         <option value="Yes">Yes</option>
@@ -125,7 +118,7 @@
         <input type="number" id="nursery" placeholder="Nursery" oninput="validateInput(this)">
         <input type="number" id="kg1" placeholder="KG 1" oninput="validateInput(this)">
         <input type="number" id="kg2" placeholder="KG 2" oninput="validateInput(this)">
-        <input type="number" id="basic1" placeholder="Basic 1" oninput="validateInput(this)">
+        <input type="number" id="basic1" placeholder="Basic 1" inputmode="numeric" oninput="validateInput(this)">
         <input type="number" id="basic2" placeholder="Basic 2" oninput="validateInput(this)">
         <input type="number" id="basic3" placeholder="Basic 3" oninput="validateInput(this)">
         <input type="number" id="basic4" placeholder="Basic 4" oninput="validateInput(this)">
@@ -133,12 +126,13 @@
         <input type="number" id="basic6" placeholder="Basic 6" oninput="validateInput(this)">
         <input type="number" id="basic7" placeholder="Basic 7" oninput="validateInput(this)">
         <input type="number" id="basic8" placeholder="Basic 8" oninput="validateInput(this)">
-        <input type="number" id="basic9" placeholder="Basic 9" oninput="validateInput(this)">
+        <input type="number" id="basic9" placeholder="Basic 9" inputmode="numeric" oninput="validateInput(this)">
       </div>
 
       <button class="login_btn" onclick="confirmRegistration()">Register</button>
     </div>
 
+    <!-- SUMMARY -->
     <div id="summarySection" style="display:none;">
       <h4>Summary</h4>
       <p id="summaryText"></p>
@@ -148,47 +142,69 @@
     </div>
   </div>
 
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
 <script>
+/* ---------------- FIREBASE CONFIG ---------------- */
+const firebaseConfig = {
+  apiKey: "AIzaSyBgS5s6SHMj4RqZwq5MxM0crT2t-XT2vbs",
+  authDomain: "scanparceltoday.firebaseapp.com",
+  projectId: "scanparceltoday",
+  storageBucket: "scanparceltoday.firebasestorage.app",
+  messagingSenderId: "537794506429",
+  appId: "1:537794506429:web:17b8d24e4ec5f770a9d1d4"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
 const fmt = new Intl.NumberFormat('en-US');
 
+
+/* ---------------- HELPERS ---------------- */
 function validateInput(input) {
   input.value = input.value.replace(/[^0-9]/g, '');
 }
 
+function generateSchoolCode(name) {
+  return name.replace(/\s+/g, "").toUpperCase() + "-" + Math.floor(1000 + Math.random() * 9000);
+}
+
+function v(id) {
+  return parseInt(document.getElementById(id).value) || 0;
+}
+
+
+/* ---------------- FORM SWITCHER ---------------- */
 function showForm() {
   let type = document.getElementById("registrationType").value;
   let container = document.getElementById("terminalCandidates");
   let inputs = document.querySelectorAll("#terminalCandidates input");
 
-  // Reset fields
-  inputs.forEach(i => {
-    i.value = "";
-    i.disabled = false;
-    i.style.display = "block";
-    i.style.background = "white";
-  });
+  inputs.forEach(i => { i.value = ""; i.style.display = "block"; });
 
-  // show language & french always after selecting exam
-  document.getElementById("ghanaLang").style.display = (type ? "block" : "none");
-  document.getElementById("french").style.display = (type ? "block" : "none");
+  document.getElementById("ghanaLang").style.display = type ? "block" : "none";
+  document.getElementById("french").style.display = type ? "block" : "none";
 
   if (type === "terminal") {
     container.style.display = "block";
-    inputs.forEach(i => i.disabled = false);
-  } 
+  }
   else if (type === "mock") {
     container.style.display = "block";
     inputs.forEach(i => i.style.display = "none");
-    let b9 = document.getElementById("basic9");
-    b9.style.display = "block";
-    b9.disabled = false;
-  } 
+    document.getElementById("basic9").style.display = "block";
+  }
   else {
     container.style.display = "none";
   }
 }
 
-function confirmRegistration() {
+
+/* ---------------- MAIN SUBMISSION ---------------- */
+async function confirmRegistration() {
+
   let schoolName = document.getElementById("schoolName").value.trim();
   let contact = document.getElementById("contact").value.trim();
   let location = document.getElementById("location").value.trim();
@@ -196,16 +212,16 @@ function confirmRegistration() {
   let lang = document.getElementById("ghanaLang").value;
   let french = document.getElementById("french").value;
 
-  if (!contact || !location) return alert("Contact & Location are required.");
+  if (!contact || !location) return alert("Contact & Location required.");
   if (!type) return alert("Select exam type.");
-  if (!lang) return alert("Select Ghanaian language.");
+  if (!lang) return alert("Select Ghanaian Language.");
   if (!french) return alert("Select French option.");
 
   let categories;
 
   if (type === "terminal") {
     let inputs = document.querySelectorAll("#terminalCandidates input");
-    for (let i of inputs) if (i.value === "") return alert("Fill every class field.");
+    for (let i of inputs) if (i.value === "") return alert("Fill all class fields.");
 
     categories = {
       "Pre-School": (v("nursery") + v("kg1") + v("kg2")) * 8,
@@ -214,44 +230,94 @@ function confirmRegistration() {
       "Basic 7-8": (v("basic7") + v("basic8")) * 15,
       "Basic 9": v("basic9") * 12
     };
-  } 
-  else {
-    if (v("basic9") === 0 && document.getElementById("basic9").value === "") 
+  } else {
+    if (document.getElementById("basic9").value === "")
       return alert("Enter Basic 9 enrollment.");
-    categories = { "Mock (Basic 9 Only)": v("basic9") * 20 };
+    categories = { "Mock": v("basic9") * 20 };
   }
 
-  let summary = `<b>Exam Type:</b> ${type.toUpperCase()} <br>
-                 <b>Language:</b> ${lang} <br>
-                 <b>French:</b> ${french} <br><br>`;
 
+  /* ----------- BILL ------------ */
   let totalBill = 20;
-  for (let key in categories) {
-    summary += `${key}: GHS ${fmt.format(categories[key])}<br>`;
-    totalBill += categories[key];
+  for (let key in categories) totalBill += categories[key];
+
+
+  /* ----------- SAVE SCHOOL IF NEW ------------ */
+  let schoolId = localStorage.getItem("schoolId");
+
+  if (!schoolId) {
+    schoolId = generateSchoolCode(schoolName || "SCHOOL");
+    localStorage.setItem("schoolId", schoolId);
+
+    await db.collection("schools").doc(schoolId).set({
+      schoolName: schoolName || "N/A",
+      contact,
+      location,
+      language: lang,
+      french,
+      createdAt: new Date().toISOString()
+    });
   }
 
-  document.getElementById("summaryText").innerHTML = 
-      summary + `<br><b>Total Bill: GHS ${fmt.format(totalBill)}</b>`;
+
+  /* ----------- SAVE REGISTRATION ------------ */
+  let enrollment = {
+    nursery: v("nursery"),
+    kg1: v("kg1"),
+    kg2: v("kg2"),
+    basic1: v("basic1"),
+    basic2: v("basic2"),
+    basic3: v("basic3"),
+    basic4: v("basic4"),
+    basic5: v("basic5"),
+    basic6: v("basic6"),
+    basic7: v("basic7"),
+    basic8: v("basic8"),
+    basic9: v("basic9")
+  };
+
+  await db.collection("registrations").add({
+    schoolId,
+    examType: type,
+    enrollment,
+    billAmount: totalBill,
+    submittedAt: new Date().toISOString()
+  });
+
+
+  /* ----------- SUMMARY ------------ */
+  let summary = `<b>School ID:</b> ${schoolId}<br><b>Exam Type:</b> ${type}<br><b>Language:</b> ${lang}<br><b>French:</b> ${french}<br><br>`;
+  for (let key in categories) summary += `${key}: GHS ${fmt.format(categories[key])}<br>`;
+
+  document.getElementById("summaryText").innerHTML =
+    summary + `<br><b>Total Bill: GHS ${fmt.format(totalBill)}</b>`;
 
   document.querySelector(".form").style.display = "none";
   document.getElementById("summarySection").style.display = "block";
 
+
+  /* ----------- SHARING ------------ */
   let msg = encodeURIComponent(
-    `School Name: ${schoolName || "N/A"}
+    `School ID: ${schoolId}
+School Name: ${schoolName}
 Contact: ${contact}
 Location: ${location}
-Exam Type: ${type.toUpperCase()}
+Exam Type: ${type}
 Language: ${lang}
 French: ${french}
 Total Bill: GHS ${fmt.format(totalBill)}
-Use school name as reference.`
+Use School ID as payment reference.`
   );
 
-  document.getElementById("whatsappBtn").onclick = () => window.open(`https://api.whatsapp.com/send?text=${msg}`);
-  document.getElementById("smsBtn").onclick = () => window.open(`sms:?body=${msg}`);
+  document.getElementById("whatsappBtn").onclick =
+    () => window.open(`https://api.whatsapp.com/send?text=${msg}`);
+
+  document.getElementById("smsBtn").onclick =
+    () => window.open(`sms:?body=${msg}`);
 }
 
+
+/* ---------------- RESET ---------------- */
 function resetForm() {
   document.querySelector(".form").style.display = "flex";
   document.getElementById("summarySection").style.display = "none";
@@ -261,10 +327,7 @@ function resetForm() {
   document.getElementById("ghanaLang").style.display = "none";
   document.getElementById("french").style.display = "none";
 }
-
-function v(id) {
-  return parseInt(document.getElementById(id).value) || 0;
-}
 </script>
+
 </body>
 </html>
